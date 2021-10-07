@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS_BASE=-Wall -pedantic -ggdb
+CFLAGS_BASE=-Wall -pedantic -ggdb -std=c99
 PKGS=sdl2
 CFLAGS=$(CFLAGS_BASE) $(shell pkg-config --cflags $(PKGS))
 LIBS=$(shell pkg-config --libs $(PKGS))

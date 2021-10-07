@@ -19,6 +19,13 @@ void * p_sec(void * code)
   return code;
 }
 
+struct App{
+  enum states{
+	     QUIT,
+	     RUN
+  }state;
+};
+
 int main(int argc, char *argv[]){
   i_sec(SDL_Init(SDL_INIT_VIDEO));
   SDL_Window *window = p_sec(SDL_CreateWindow("Graph",
@@ -28,15 +35,16 @@ int main(int argc, char *argv[]){
     p_sec(SDL_CreateRenderer(window,
 			     -1,
 			     SDL_RENDERER_ACCELERATED));
-
-  int quit = 0;
+  struct App app = {
+		    .state = RUN,	    
+  };
   SDL_Event event;
-  while(!quit){
+  while(app.state != QUIT){
     while(SDL_PollEvent(&event))
       {
 	switch(event.type){
 	case SDL_QUIT: {
-	  quit = 1;
+	  app.state = QUIT;
 	}break;
 	}
       }
