@@ -340,6 +340,7 @@ int main(int argc, char *argv[]){
     SDL_RenderPresent(renderer);
     // if delete was clicked, then switch the select state
     if (app.selected_button == 1){
+      SDL_Delay(150);
       app.selected_button = 0;
     }
   }
