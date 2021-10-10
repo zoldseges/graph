@@ -288,6 +288,7 @@ int main(int argc, char *argv[]){
 			      &app.window_width, &app.window_height);
 	    app.canvas.h = app.window_height -
 	      (BUTTON_HEIGHT +  MSG_HEIGHT);
+	    app.UI.y = app.canvas.h;
 	    app.UI.h = (BUTTON_HEIGHT + MSG_HEIGHT);	
 	  }
 	} break;
@@ -302,6 +303,7 @@ int main(int argc, char *argv[]){
 	    char *msg = "Select";
 	    app.msg = msg;
 	    app.selected_button = 0;
+	    printf("hi\n");
 	  } else if (event.type == EVENT_DEL_BUTTON_CLICKED) {
 	    char *msg = "Delete";
 	    app.msg = msg;

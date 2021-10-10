@@ -1,4 +1,6 @@
-[ ] add_node funcionality
+[ ] add_node functionality
+  [ ] implement minimal distance functionality
+[ ] add_edge functionality
 [ ] select functionality
 [ ] delete functionality
 [ ] bake everything into the executeable
