@@ -1,1 +1,5 @@
 graph
+TAGS
+example
+.cache
+compile_commands.json

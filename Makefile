@@ -1,7 +1,7 @@
-CC :=g++
-CFLAGS_BASE := -pedantic-errors -Weffc++ -Wall -Wextra -Wsign-conversion -Werror -std=c++20
-SRC_FILES := $(wildcard src/*.cpp)
-PKGS := gtk4
+CC :=gcc
+CFLAGS_BASE := -pedantic-errors -Wall -Wextra -Werror 
+SRC_FILES := $(wildcard src/*.c)
+PKGS := gtkmm-4.0
 CFLAGS := $(CFLAGS_BASE) $(shell pkg-config --cflags $(PKGS))
 LIBS := $(shell pkg-config --libs $(PKGS))
 
