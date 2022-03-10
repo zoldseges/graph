@@ -1,2 +1,2 @@
 # graph
-simple graph editor built on SDL2
+simple graph editor built on GTK2
