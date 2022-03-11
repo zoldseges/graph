@@ -11,7 +11,7 @@ Node *walk_nodes(const Graph *graph)
   if(graph) {
     curr_node = graph->head;
   } else if (next_node) {
-    curr_node = next_node->next;
+    curr_node = next_node;
   }
 
   if(curr_node) {
@@ -29,14 +29,18 @@ void add_node(Graph *graph, double x, double y)
   new->x = x;
   new->y = y;
   new->next = NULL;
+
+  graph->node_cnt++;
+
   if(!graph->head){
+    new->id = 1;
     graph->head = new;
     graph->tail = new;
   } else {
+    new->id = graph->node_cnt;
     graph->tail->next = new;
     graph->tail = new;
   }
-  graph->node_cnt++;
 }
 
 void delete_node(Graph *graph, double id)
