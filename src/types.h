@@ -29,6 +29,7 @@ typedef struct Ctl Ctl;
  */
 
 enum STATE {
+  EMPTY,
   ADD_N,
   MOVE_N,
   SEL_N,

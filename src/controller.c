@@ -10,14 +10,18 @@ void init_ctl(Ctl *ctl)
 }
 
 void ctl_handler(Ctl *ctl,
-	     int x,
-	     int y)
+		 int x,
+		 int y)
 {
   switch (ctl->state) {
   case ADD_N:
     add_node(ctl->graph, x, y);
     break;
   default:
+    break;
+  }
+  switch (ctl->event) {
+  case MOTION:
     break;
   }
   gtk_widget_queue_draw(ctl->drawing_area);

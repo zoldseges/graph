@@ -4,6 +4,16 @@
 #include "view.h"
 #include "debug.h"
 
+static void motion_handler(UNUSED GtkEventControllerMotion	*self,
+			          gdouble			 x,
+			          gdouble			 y,
+                                  gpointer			 ctl_data)
+{
+  Ctl *ctl = (Ctl*)ctl_data;
+  
+  ctl_handler(ctl, x, y);
+}
+
     /*************************************************/
     /* 1 = left button.				     */
     /* 2 = middle button (pressing the scroll wheel) */
@@ -30,6 +40,7 @@ static void click_handler(	 GtkGestureClick	*gesture,
     break;
   }
   ctl_handler(ctl, x, y);
+  ctl->state = EMPTY;
 }
  
 			  
@@ -75,6 +86,15 @@ static void activate(GtkApplication *app, gpointer ctl_data)
   g_signal_connect(click,
 		   "pressed",
 		   G_CALLBACK(click_handler),
+		   ctl_data);
+
+  /* motion */
+  motion = gtk_event_controller_motion_new();
+  gtk_widget_add_controller(drawing_area,
+			    GTK_EVENT_CONTROLLER(motion));
+  g_signal_connect(motion,
+		   "motion",
+		   G_CALLBACK(motion_handler),
 		   ctl_data);
   
   gtk_widget_show(window);
