@@ -3,23 +3,29 @@
 #include "debug.h"
 #include "model.h"
 
-Node *walk_nodes(const Graph *graph)
+void walk_nodes(const Graph *graph, Node **curr)
 {
-  static Node *next_node = NULL;
-  Node *curr_node = NULL;
-
-  if(graph) {
-    curr_node = graph->head;
-  } else if (next_node) {
-    curr_node = next_node;
+  /* if called with graph */
+  if(graph){
+    *curr = graph->head;
+    /* if called with NULL */
+  } else {
+    *curr = (*curr)->next;
   }
-
-  if(curr_node) {
-    next_node = curr_node->next;
-  }
-  
-  return curr_node;
 }
+
+void run_function_on_nodes(void (*f)(Node *n, gpointer d),
+			   Graph *g,
+			   gpointer d)
+{
+  Node *curr = NULL;
+  walk_nodes(g, &curr);
+  while(curr){
+    f(curr, d);
+    walk_nodes(NULL, &curr);
+  }
+}
+
 
 // TODO update adj_matrix
 void add_node(Graph *graph, gdouble x, gdouble y)
