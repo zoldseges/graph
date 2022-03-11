@@ -9,9 +9,9 @@ void init_ctl(Ctl *ctl)
   DEBUG_NULL(ctl->graph);
 }
 
-void ctl_handler(Ctl *ctl,
-		 int x,
-		 int y)
+void ctl_handler(Ctl		*ctl,
+		 gdouble	 x,
+		 gdouble	 y)
 {
   switch (ctl->state) {
   case ADD_N:

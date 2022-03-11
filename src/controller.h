@@ -7,8 +7,8 @@
 void init_ctl(Ctl *ctl);
 
 void ctl_handler(Ctl *ctl,
-	     int x,
-	     int y);
+	     gdouble x,
+	     gdouble y);
 
 void free_ctl(Ctl *ctl);
 
