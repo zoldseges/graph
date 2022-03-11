@@ -38,6 +38,7 @@ void draw_cb(UNUSED	GtkDrawingArea	*dawing_area,
     }
 }
 
+// TODO ratinalize this function (it was copy-paste)
 void resize_cb(       GtkWidget *widget,
 	       UNUSED int	 width,
 	       UNUSED int	 height,

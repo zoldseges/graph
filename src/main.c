@@ -14,11 +14,10 @@
     /* 7 = push scroll wheel right.		     */
     /* 8 = 4th button (aka browser backward button)  */
     /*************************************************/
-
 static void click_handler(	 GtkGestureClick	*gesture,
 			  UNUSED int			 n_press,
-			         double			 x,
-			         double			 y,
+			         gdouble		 x,
+			         gdouble		 y,
 				 gpointer		 data)  
 {
   guint button = gtk_gesture_single_get_current_button

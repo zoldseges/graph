@@ -11,8 +11,8 @@ typedef struct Node Node;
 
 struct Node {
   int id;
-  double x;
-  double y;
+  gdouble x;
+  gdouble y;
   Node *next;
 };
 
@@ -63,8 +63,8 @@ struct Ctl {
   int hovered[2];
   enum STATE state;
   enum EVENT event;
-  double x;
-  double y;
+  gdouble x;
+  gdouble y;
   
   /* model
    */

@@ -22,7 +22,7 @@ Node *walk_nodes(const Graph *graph)
 }
 
 // TODO update adj_matrix
-void add_node(Graph *graph, double x, double y)
+void add_node(Graph *graph, gdouble x, gdouble y)
 {
   Node *new = calloc(1, sizeof(Node));
   
@@ -43,22 +43,22 @@ void add_node(Graph *graph, double x, double y)
   }
 }
 
-void delete_node(Graph *graph, double id)
+void delete_node(Graph *graph, gdouble id)
 {
   UNIMPLEMENTED;
 }
 
-void move_node(Graph *graph, double id, double x, double y)
+void move_node(Graph *graph, gdouble id, gdouble x, gdouble y)
 {
   UNIMPLEMENTED;
 }
 
-void add_edge(Graph *graph, double id_from, double id_to)
+void add_edge(Graph *graph, gdouble id_from, gdouble id_to)
 {
   UNIMPLEMENTED;
 }
 
-void delete_edge(Graph *graph, double id_from, double id_to)
+void delete_edge(Graph *graph, gdouble id_from, gdouble id_to)
 {
   UNIMPLEMENTED;
 }
