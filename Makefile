@@ -1,6 +1,7 @@
 CC := gcc
 RELEASE_FLAGS := -Werror
-DEBUG_FLAGS := -g
+DEBUG_FLAGS := -O0 -g
+RELEASE_FLAGS := -O3
 CFLAGS_BASE := -pedantic-errors -Wall -Wextra
 SRCS := $(wildcard src/*.c)
 HEADERS := $(wildcard src/*.h)
@@ -12,3 +13,6 @@ all: graph
 
 graph: $(SRCS) $(HEADERS)
 	$(CC) $(filter %.c,$^) -o $@ $(CFLAGS) $(LIBS) $(DEBUG_FLAGS) 
+
+release: $(SRCS) $(HEADERS)
+	$(CC) $(filter %.c,$^) -o $@ $(CFLAGS) $(LIBS) $(RELEASE_FLAGS) 
