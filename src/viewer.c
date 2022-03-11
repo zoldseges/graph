@@ -8,8 +8,9 @@
 
 static const int node_r = 5;
 
-static void draw_node(Node *node, cairo_t *cr)
+static void draw_node(Node *node, gpointer data)
 {
+  cairo_t *cr = (cairo_t *)data;
   cairo_arc(cr, node->x, node->y, node_r, 0, 2*M_PI);
   cairo_fill(cr);
 }
@@ -30,12 +31,9 @@ void draw_cb(UNUSED	GtkDrawingArea	*dawing_area,
 
   cairo_set_source_rgb(cr, 0, 0, 0);
 
-  for(Node *curr = walk_nodes(graph);
-      curr;
-      curr = walk_nodes(NULL))
-    {
-      draw_node(curr, cr);
-    }
+  run_function_on_nodes(draw_node,
+			graph,
+			(gpointer) cr);
 }
 
 void resize_cb(       GtkWidget *widget,

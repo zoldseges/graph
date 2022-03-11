@@ -10,15 +10,12 @@ void move_node(Graph *graph, double id, double x, double y);
 void add_edge(Graph *graph, double id_from, double id_to);
 void delete_edge(Graph *graph, double id_from, double id_to);
 
-/* Pass NULL to get subsequent node
- * typical use:
- * for(Node *curr = walk_nodes(graph);
- *     curr;
- *     curr = walk_nodes(NULL)) 
- *   {
- *   do_stuff(curr);
- *   }
+/* runs a function on all nodes of a graph
+ * function signature:
+ *   void f(Node *node, gpointer data);
  */
-Node *walk_nodes(const Graph *graph);
+void run_function_on_nodes(void (*f)(Node *n, gpointer d),
+			   Graph *g,
+			   gpointer d);
 
 #endif /* MODEL_H__ */
