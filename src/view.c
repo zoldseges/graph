@@ -18,9 +18,9 @@ void draw_cb(UNUSED	GtkDrawingArea	*dawing_area,
 	     		cairo_t		*cr,
 	     UNUSED	int		 width,
 	     UNUSED	int		 height,
-	     		gpointer	 data)
+	     		gpointer	 ctl_data)
 {
-  Ctl *ctl = (Ctl*)data;
+  Ctl *ctl = (Ctl*)ctl_data;
   Graph *graph = ctl->graph;
   cairo_surface_t *surface = ctl->surface;
 
@@ -42,9 +42,9 @@ void draw_cb(UNUSED	GtkDrawingArea	*dawing_area,
 void resize_cb(       GtkWidget *widget,
 	       UNUSED int	 width,
 	       UNUSED int	 height,
-	              gpointer	 data)
+	              gpointer	 ctl_data)
 {
-  Ctl *ctl = (Ctl*)data;
+  Ctl *ctl = (Ctl*)ctl_data;
   cairo_surface_t *surface = ctl->surface;
   if(surface){
     cairo_surface_destroy(surface);

@@ -18,11 +18,11 @@ static void click_handler(	 GtkGestureClick	*gesture,
 			  UNUSED int			 n_press,
 			         gdouble		 x,
 			         gdouble		 y,
-				 gpointer		 data)  
+				 gpointer		 ctl_data)  
 {
   guint button = gtk_gesture_single_get_current_button
     (GTK_GESTURE_SINGLE(gesture));
-  Ctl *ctl = (Ctl*)data;
+  Ctl *ctl = (Ctl*)ctl_data;
   switch (button) {
   case 1:
     ctl->event = L_CLICK;
@@ -34,14 +34,15 @@ static void click_handler(	 GtkGestureClick	*gesture,
  
 			  
 
-static void activate(GtkApplication *app, gpointer data)
+static void activate(GtkApplication *app, gpointer ctl_data)
 {
   GtkWidget *window;
   GtkWidget *frame;
   GtkWidget *drawing_area;
   GtkGesture *click;
-
-  Ctl *ctl = (Ctl*)data;
+  GtkEventController *motion;
+  
+  Ctl *ctl = (Ctl*)ctl_data;
   
   window = gtk_application_window_new(app);
   gtk_window_set_title(GTK_WINDOW(window), "Draw");
@@ -60,10 +61,10 @@ static void activate(GtkApplication *app, gpointer data)
 
   gtk_drawing_area_set_draw_func(GTK_DRAWING_AREA(drawing_area),
 				 draw_cb,
-				 data,
+				 ctl_data,
 				 NULL);
 
-  g_signal_connect(drawing_area, "resize", G_CALLBACK(resize_cb), data);
+  g_signal_connect(drawing_area, "resize", G_CALLBACK(resize_cb), ctl_data);
 
   /* leftclick */
   click = gtk_gesture_click_new();
@@ -74,7 +75,7 @@ static void activate(GtkApplication *app, gpointer data)
   g_signal_connect(click,
 		   "pressed",
 		   G_CALLBACK(click_handler),
-		   data);
+		   ctl_data);
   
   gtk_widget_show(window);
 }
