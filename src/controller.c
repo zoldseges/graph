@@ -1,6 +1,6 @@
 #include "debug.h"
 #include "types.h"
-#include "viewer.h"
+#include "view.h"
 #include "model.h"
 
 void init_ctl(Ctl *ctl)

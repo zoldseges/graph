@@ -2,7 +2,7 @@
 #define CONTROLLER_H__
 
 #include "types.h"
-#include "viewer.h"
+#include "view.h"
 
 void init_ctl(Ctl *ctl);
 

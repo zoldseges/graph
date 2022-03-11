@@ -1,7 +1,7 @@
 #include <gtk/gtk.h>
 #include "types.h"
 #include "controller.h"
-#include "viewer.h"
+#include "view.h"
 #include "debug.h"
 
     /*************************************************/
