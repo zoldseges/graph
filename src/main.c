@@ -41,13 +41,19 @@ static void click_handler(	 GtkGestureClick	*gesture,
   case 1:
     // TODO implement add node, add edge, select node, etc...
     ctl->event = L_CLICK;
-    if(ctl->hovered[0] == 0 && ctl->hovered[1] == 0){
+    switch (marked_type(ctl->hovered)) {
+    case NONE:
       ctl->state = ADD_N;
-      ctl_handler(ctl, x, y);
-      ctl->state = EMPTY;
-    } else if (ctl->hovered[1] == 0) {
+      break;
+    case NODE:
       ctl->state = SELECT_N;
+      break;
+    case EDGE:
+      ctl->state = SELECT_E;
+      break;
     }
+    ctl_handler(ctl, x, y);
+    ctl->state = EMPTY;
     break;
   }
 }

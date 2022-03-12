@@ -4,33 +4,33 @@
 #include "types.h"
 
 void add_node(Graph *graph, gdouble x, gdouble y);
-void delete_node(Graph *graph, gdouble id);
-void move_node(Graph *graph, gdouble id, gdouble x, gdouble y);
+void delete_node(Graph *graph, Node *node);
+void move_node(Graph *graph, Node *node, gdouble x, gdouble y);
 
-void add_edge(Graph *graph, gdouble id_from, gdouble id_to);
-void delete_edge(Graph *graph, gdouble id_from, gdouble id_to);
+void add_edge(Graph *graph, Node *node_from, Node *node_to);
+void delete_edge(Graph *graph, Node *node_from, Node *node_to);
 
-void select_node(Node **node, Graph *graph, int id);
+Node *select_node(Graph *graph, int id);
 
 /* runs a function on all nodes of a graph
  * function signature:
  *   void f(Node *node, gpointer data);
  */
 void nodes_call(void (*f)(Node *n, gpointer d),
-			   Graph *g,
-			   gpointer d);
+		Graph *g,
+		gpointer d);
 
 /* runs a function which returns an integer
  * on all nodes, selects the Node with which
  * the function returned with the smallest
- * POSITIVE integer and returns it's ID.
- * -1 if not found.
+ * POSITIVE integer and returns a pointer
+ * to it.
  * function signature:
  *   int f(Node *node, gpointer data);
  */
-int nodes_filter_one(int (*f)(Node *n, gpointer d),
-		     Graph *g,
-		     gpointer d);
+Node *nodes_filter_one(int (*f)(Node *n, gpointer d),
+		       Graph *g,
+		       gpointer d);
 
 
 // TODO
@@ -43,8 +43,8 @@ int nodes_filter_one(int (*f)(Node *n, gpointer d),
  * function signature:
  *   gboolean f(Node *node, gpointer data);
  */
-int nodes_filter_all(gboolean (*f)(Node *n, gpointer d),
-		     Graph *g,
-		     gpointer d);
+Node *nodes_filter_all(gboolean (*f)(Node *n, gpointer d),
+		       Graph *g,
+		       gpointer d);
 
 #endif /* MODEL_H__ */

@@ -6,11 +6,20 @@
 
 /* Model
  */
-typedef struct Graph Graph;
+typedef struct Marked Marked;
 typedef struct Node Node;
+typedef struct Graph Graph;
+typedef struct Point Point;
+
+struct Point {
+  gdouble x;
+  gdouble y;
+};
 
 struct Node {
   int id;
+  // TDOD
+  /* Point point; */
   gdouble x;
   gdouble y;
   Node *next;
@@ -55,15 +64,29 @@ enum EVENT {
   RESIZE,
 };
 
-struct Ctl {
+enum MARKED {
+  NONE,
+  NODE,
+  EDGE,
+};
+
+struct Marked {
   /* control
-   * selected[0] if node,
-   * selected[0] & selected[1] if edge
+   * marked[0] if node,
+   * marked[0] & marked[1] if edge
    */
-  int selected[2];
-  int hovered[2];
+  Node *elem[2];
+  Marked *next;
+};
+
+struct Ctl {
+  Marked *hovered;
+  Marked *selected;
+  
   enum STATE state;
   enum EVENT event;
+  
+  
   gdouble x;
   gdouble y;
   

@@ -3,6 +3,7 @@
 
 #include "debug.h"
 #include "model.h"
+#include "controller.h"
 
 void null_error(void *p, char *filename, int linenum, const char *func)
 {
@@ -75,25 +76,77 @@ void print_hovered(Ctl *ctl,
 		   int linenum,
 		   const char *func)
 {
+  Marked *curr = ctl->hovered;
+
   printf("print_hovered called on ");
   printf("%s:", filename);
   printf("%d:", linenum);
   printf("%d: \n", 0);
   printf("in `%s`\n", func);
-  printf("hovered: [%d, %d]\n", ctl->hovered[0], ctl->hovered[1]);
+
+  while(curr) {
+    switch (marked_type(curr)) {
+    case NONE:
+      printf("NONE");
+      break;
+    case NODE:
+      printf("%6s%6s  ", "TYPE: ", "NODE");
+      printf("ID: %3d   ", curr->elem[0]->id);
+      printf("x: %.2f ", curr->elem[0]->x);
+      printf("x: %.2f ", curr->elem[0]->y);
+      break;
+    case EDGE:
+      printf("%6s%6s  ", "TYPE: ", "EDGE");
+      printf("%6s%3d /", "IDS: ", curr->elem[0]->id);
+      printf("x: %.2f ", curr->elem[0]->x);
+      printf("y: %.2f\n", curr->elem[0]->y);
+      printf("%6s%3d \\", " ", curr->elem[1]->id);
+      printf("x: %.2f ", curr->elem[1]->x);
+      printf("y: %.2f\n", curr->elem[1]->y);
+      break;
+    }
+    printf("\n");
+    curr = curr->next;
+  }
   printf("-----------------------------\n");
 }
 
 void print_selected(Ctl *ctl,
-		    char *filename,
-		    int linenum,
-		    const char *func)
+		   char *filename,
+		   int linenum,
+		   const char *func)
 {
-  printf("print_selected called on ");
+  Marked *curr = ctl->selected;
+
+  printf("print_hovered called on ");
   printf("%s:", filename);
   printf("%d:", linenum);
   printf("%d: \n", 0);
   printf("in `%s`\n", func);
-  printf("selected: [%d, %d]\n", ctl->selected[0], ctl->selected[1]);
+
+  while(curr) {
+    switch (marked_type(curr)) {
+    case NONE:
+      printf("NONE");
+      break;
+    case NODE:
+      printf("%6s%6s  ", "TYPE: ", "NODE");
+      printf("ID: %3d   ", curr->elem[0]->id);
+      printf("x: %.2f ", curr->elem[0]->x);
+      printf("x: %.2f ", curr->elem[0]->y);
+      break;
+    case EDGE:
+      printf("%6s%6s  ", "TYPE: ", "EDGE");
+      printf("%6s%3d /", "IDS: ", curr->elem[0]->id);
+      printf("x: %.2f ", curr->elem[0]->x);
+      printf("y: %.2f\n", curr->elem[0]->y);
+      printf("%6s%3d \\", " ", curr->elem[1]->id);
+      printf("x: %.2f ", curr->elem[1]->x);
+      printf("y: %.2f\n", curr->elem[1]->y);
+      break;
+    }
+    printf("\n");
+    curr = curr->next;
+  }
   printf("-----------------------------\n");
 }
