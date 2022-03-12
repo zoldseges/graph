@@ -16,3 +16,6 @@ graph: $(SRCS) $(HEADERS)
 
 release: $(SRCS) $(HEADERS)
 	$(CC) $(filter %.c,$^) -o $@ $(CFLAGS) $(LIBS) $(RELEASE_FLAGS) 
+
+test: $(wildcard test/src/*)
+	$(CC) test/src/main.c -o test/$@ $(CFLAGS) $(LIBS) $(DEBUG_FLAGS) 

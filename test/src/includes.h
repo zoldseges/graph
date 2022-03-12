@@ -1,0 +1,5 @@
+#include "../../src/view.c"
+#include "../../src/model.c"
+#include "../../src/geometry.c"
+#include "../../src/controller.c"
+#include "../../src/debug.c"
