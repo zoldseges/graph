@@ -77,7 +77,7 @@ void set_hovered(Ctl *ctl, Point mouse_pos)
 
 void init_ctl(Ctl *ctl)
 {
-  const int init_m_size = 8 * 8;
+  const int init_row_sz = 8;
 
   ctl->graph	= calloc(1, sizeof(Graph));
   ctl->hovered	= calloc(1, sizeof(Marked));
@@ -99,11 +99,13 @@ void init_ctl(Ctl *ctl)
 
   ctl->graph->node_cnt = 0;
 
-  ctl->graph->m_size = init_m_size;
-  ctl->graph->adj_m = malloc(init_m_size * sizeof(int));
+  ctl->graph->row_sz = init_row_sz;
+  ctl->graph->adj_m = malloc(init_row_sz * init_row_sz * sizeof(int));
   DEBUG_NULL(ctl->graph->adj_m);
-  for(int i = 0; i < init_m_size; i++) {
-    ctl->graph->adj_m[i] = -1;
+  for(int i = 0; i < init_row_sz; i++) {
+    for(int j = 0; j < init_row_sz; j++) {
+      *(ctl->graph->adj_m + (init_row_sz * i) + j) = -1;
+    }
   }
 }
 

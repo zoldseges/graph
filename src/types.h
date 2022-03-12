@@ -22,12 +22,21 @@ struct Node {
   Node *next;
 };
 
+/******************************/
+/* adj_m: -1 => no connection */
+/* 			      */
+/*           to to	      */
+/*      [ -1 xx xx -1 ]	      */
+/* from [ xx -1 xx -1 ]	      */
+/* from [ xx xx -1 -1 ]	      */
+/*      [ -1 -1 -1 -1 ]	      */
+/******************************/
 struct Graph {
   Node *head;
   Node *tail;
   int node_cnt; // node count
   int *adj_m;  // adjacency matrix
-  int m_size;
+  int row_sz;
 };
 
 typedef struct Ctl Ctl;

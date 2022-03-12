@@ -7,8 +7,10 @@ void add_node(Graph *graph, Point p);
 void delete_node(Graph *graph, Node *node);
 void move_node(Graph *graph, Node *node, Point p);
 
-void add_edge(Graph *graph, Node *node_from, Node *node_to);
-void delete_edge(Graph *graph, Node *node_from, Node *node_to);
+/* add edge: set edge weight to 0 or else
+ * del edge: set_edge_weight to -1
+ */
+void set_edge_weight(Graph *graph, Node *from, Node *to, int weight);
 
 Node *select_node(Graph *graph, int id);
 
