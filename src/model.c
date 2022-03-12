@@ -12,33 +12,31 @@ static void walk_nodes(Node **curr, const Graph *graph)
   }
 }
 
-void select_node(Node **node, Graph *graph, int id){
+Node *get_node_by_id(Graph *graph, int id){
   Node *curr = NULL;
   walk_nodes(&curr, graph);
   while(curr){
     if(curr->id == id){
-      *node = curr;
       break;
     }
     walk_nodes(&curr, NULL);
   }
+  return curr;
 }
 
 // TODO see model.h
-int nodes_filter_all(gboolean (*f)(Node *n, gpointer d),
-		     Graph *g,
-		     gpointer d)
+Node *nodes_filter_all(UNUSED gboolean (*f)(Node *n, gpointer d),
+		       UNUSED Graph *g,
+		       UNUSED gpointer d)
 {
   UNIMPLEMENTED;
   return 0;
 }
 
-int nodes_filter_one(int (*f)(Node *n, gpointer d),
-			       Graph *g,
-			       gpointer d)
+Node *nodes_filter_one(int (*f)(Node *n, gpointer d),
+		       Graph *g,
+		       gpointer d)
 {
-  /* return -1 if no match */
-  int id	   = -1;
   Node	*curr_node = NULL;
   int	 curr_int  = -1;
   Node	*min_node  = NULL;
@@ -56,15 +54,12 @@ int nodes_filter_one(int (*f)(Node *n, gpointer d),
     walk_nodes(&curr_node, NULL);
   }
 
-  if(min_node){
-    id = min_node->id;
-  }
-  return id;
+  return min_node;
 }
 
 void nodes_call(void (*f)(Node *n, gpointer d),
-			   Graph *g,
-			   gpointer d)
+		Graph *g,
+		gpointer d)
 {
   Node *curr = NULL;
   walk_nodes(&curr, g);
@@ -97,23 +92,30 @@ void add_node(Graph *graph, gdouble x, gdouble y)
   }
 }
 
-void delete_node(Graph *graph, gdouble id)
+void delete_node(UNUSED Graph *graph,
+		 UNUSED Node *node)
 {
   UNIMPLEMENTED;
 }
 
-void move_node(Graph *graph, gdouble id, gdouble x, gdouble y)
+void move_node(UNUSED Graph *graph,
+	       UNUSED Node *node,
+	       UNUSED gdouble x,
+	       UNUSED gdouble y)
 {
   UNIMPLEMENTED;
 }
 
-void add_edge(Graph *graph, gdouble id_from, gdouble id_to)
+void add_edge(UNUSED Graph *graph,
+	      UNUSED Node *node_from,
+	      UNUSED Node *node_to)
 {
   UNIMPLEMENTED;
 }
 
-void delete_edge(Graph *graph, gdouble id_from, gdouble id_to)
+void delete_edge(UNUSED Graph *graph,
+		 UNUSED Node *node_from,
+		 UNUSED Node *node_to)
 {
   UNIMPLEMENTED;
 }
-

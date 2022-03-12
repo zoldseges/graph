@@ -22,17 +22,14 @@ void set_hovered(Ctl *ctl,
 
   Node *node = NULL;
   
-  int node_id = -1;
-  int edge_id = -1;
-
   /* INT_MAX ~ INFINITY */
   int node_dist = INT_MAX;
-  int edge_dist = INT_MAX;
+  UNUSED int edge_dist = INT_MAX;
   
-  node_id = nodes_filter_one(node_cursor_distance,
-			     ctl->graph,
-			     packed_pos);
-  select_node(&node, ctl->graph, node_id);
+  node = nodes_filter_one(node_cursor_distance,
+			  ctl->graph,
+			  packed_pos);
+
   if(node){
     node_dist = rdist(node->x, node->y, x, y);
   }
