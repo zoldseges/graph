@@ -32,11 +32,11 @@ enum STATE {
   EMPTY,
   ADD_N,
   MOVE_N,
-  SEL_N,
+  SELECT_N,
   DEL_N,
   STRT_E,
   END_E,
-  SEL_E,
+  SELECT_E,
   DEL_E,
   PAN,
 };

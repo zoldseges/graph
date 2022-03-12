@@ -7,7 +7,7 @@ SRCS := $(wildcard src/*.c)
 HEADERS := $(wildcard src/*.h)
 PKGS := gtk4
 CFLAGS := $(CFLAGS_BASE) $(shell pkg-config --cflags $(PKGS))
-LIBS := $(shell pkg-config --libs $(PKGS))
+LIBS := $(shell pkg-config --libs $(PKGS)) -lm
 
 all: graph
 

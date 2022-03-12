@@ -1,9 +1,7 @@
-#define DEBUG
-
 #include "debug.h"
 #include "model.h"
 
-void walk_nodes(const Graph *graph, Node **curr)
+static void walk_nodes(Node **curr, const Graph *graph)
 {
   /* if called with graph */
   if(graph){
@@ -14,15 +12,66 @@ void walk_nodes(const Graph *graph, Node **curr)
   }
 }
 
-void run_function_on_nodes(void (*f)(Node *n, gpointer d),
+void select_node(Node **node, Graph *graph, int id){
+  Node *curr = NULL;
+  walk_nodes(&curr, graph);
+  while(curr){
+    if(curr->id == id){
+      *node = curr;
+      break;
+    }
+    walk_nodes(&curr, NULL);
+  }
+}
+
+// TODO see model.h
+int nodes_select_all(gboolean (*f)(Node *n, gpointer d),
+		     Graph *g,
+		     gpointer d)
+{
+  UNIMPLEMENTED;
+  return 0;
+}
+
+int nodes_select_one(int (*f)(Node *n, gpointer d),
+			       Graph *g,
+			       gpointer d)
+{
+  /* return -1 if no match */
+  int id	   = -1;
+  Node	*curr_node = NULL;
+  int	 curr_int  = -1;
+  Node	*min_node  = NULL;
+  /* INT_MAX ~ INFINITY */
+  int	 min_int   = INT_MAX;
+
+  walk_nodes(&curr_node, g);
+  while(curr_node){
+    curr_int = f(curr_node, d);
+    walk_nodes(&curr_node, NULL);
+
+    DEBUG_NEGINT(curr_int);
+    if(curr_int < min_int) {
+      min_node = curr_node;
+      min_int = curr_int;
+    }
+  }
+
+  if(min_node){
+    id = min_node->id;
+  }
+  return id;
+}
+
+void nodes_call(void (*f)(Node *n, gpointer d),
 			   Graph *g,
 			   gpointer d)
 {
   Node *curr = NULL;
-  walk_nodes(g, &curr);
+  walk_nodes(&curr, g);
   while(curr){
     f(curr, d);
-    walk_nodes(NULL, &curr);
+    walk_nodes(&curr, NULL);
   }
 }
 

@@ -1,6 +1,9 @@
-see examples in git history
+* TODOS
+** TODO test
+   *** 
 
-MVC:
+* MVC
+** MVC:
      _--- USER  <-_
    /               \
    V                \
@@ -8,9 +11,7 @@ CONTROLLER ------> VIEW
     \               ^
      \             /
       --> MODEL --`
-
-* MVC
-
+  
 ** drawing
 #+begin_src artist
   +---------------------------------------------------------------------------------------------------------+

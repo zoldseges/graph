@@ -10,8 +10,12 @@ static void motion_handler(UNUSED GtkEventControllerMotion	*self,
                                   gpointer			 ctl_data)
 {
   Ctl *ctl = (Ctl*)ctl_data;
-  
+  ctl->event = MOTION;
   ctl_handler(ctl, x, y);
+  PRINT_POS(x, y);
+  PRINT_GRAPH(ctl->graph);
+  PRINT_SELECTED(ctl);
+  PRINT_HOVERED(ctl);
 }
 
     /*************************************************/
@@ -35,12 +39,17 @@ static void click_handler(	 GtkGestureClick	*gesture,
   Ctl *ctl = (Ctl*)ctl_data;
   switch (button) {
   case 1:
+    // TODO implement add node, add edge, select node, etc...
     ctl->event = L_CLICK;
-    ctl->state = ADD_N;
+    if(ctl->hovered[0] == 0 && ctl->hovered[1] == 0){
+      ctl->state = ADD_N;
+      ctl_handler(ctl, x, y);
+      ctl->state = EMPTY;
+    } else if (ctl->hovered[1] == 0) {
+      ctl->state = SELECT_N;
+    }
     break;
   }
-  ctl_handler(ctl, x, y);
-  ctl->state = EMPTY;
 }
  
 			  

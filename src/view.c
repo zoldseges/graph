@@ -31,9 +31,7 @@ void draw_cb(UNUSED	GtkDrawingArea	*dawing_area,
 
   cairo_set_source_rgb(cr, 0, 0, 0);
 
-  run_function_on_nodes(draw_node,
-			graph,
-			(gpointer) cr);
+  nodes_call(draw_node, graph, (gpointer) cr);
 }
 
 // TODO ratinalize this function (it was copy-paste)
