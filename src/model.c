@@ -25,7 +25,7 @@ void select_node(Node **node, Graph *graph, int id){
 }
 
 // TODO see model.h
-int nodes_select_all(gboolean (*f)(Node *n, gpointer d),
+int nodes_filter_all(gboolean (*f)(Node *n, gpointer d),
 		     Graph *g,
 		     gpointer d)
 {
@@ -33,7 +33,7 @@ int nodes_select_all(gboolean (*f)(Node *n, gpointer d),
   return 0;
 }
 
-int nodes_select_one(int (*f)(Node *n, gpointer d),
+int nodes_filter_one(int (*f)(Node *n, gpointer d),
 			       Graph *g,
 			       gpointer d)
 {

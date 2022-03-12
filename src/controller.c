@@ -27,7 +27,7 @@ void set_hovered(Ctl *ctl,
   int node_dist = -1;
   int edge_dist = -1;
   
-  node_id = nodes_select_one(node_cursor_distance,
+  node_id = nodes_filter_one(node_cursor_distance,
 			     ctl->graph,
 			     packed_pos);
   select_node(&node, ctl->graph, node_id);

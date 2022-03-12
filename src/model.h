@@ -28,7 +28,7 @@ void nodes_call(void (*f)(Node *n, gpointer d),
  * function signature:
  *   int f(Node *node, gpointer data);
  */
-int nodes_select_one(int (*f)(Node *n, gpointer d),
+int nodes_filter_one(int (*f)(Node *n, gpointer d),
 		     Graph *g,
 		     gpointer d);
 
@@ -43,7 +43,7 @@ int nodes_select_one(int (*f)(Node *n, gpointer d),
  * function signature:
  *   gboolean f(Node *node, gpointer data);
  */
-int nodes_select_all(gboolean (*f)(Node *n, gpointer d),
+int nodes_filter_all(gboolean (*f)(Node *n, gpointer d),
 		     Graph *g,
 		     gpointer d);
 
