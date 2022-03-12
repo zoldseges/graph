@@ -17,21 +17,25 @@ void set_hovered(Ctl *ctl,
 		 gdouble x,
 		 gdouble y)
 {
-  const int hover_dist = 1000;
+  const int hover_dist = 40;
   double packed_pos[2] = {x, y};
 
   Node *node = NULL;
   
   int node_id = -1;
   int edge_id = -1;
-  int node_dist = -1;
-  int edge_dist = -1;
+
+  /* INT_MAX ~ INFINITY */
+  int node_dist = INT_MAX;
+  int edge_dist = INT_MAX;
   
   node_id = nodes_filter_one(node_cursor_distance,
 			     ctl->graph,
 			     packed_pos);
   select_node(&node, ctl->graph, node_id);
-  node_dist = (node->x, node->y, x, y);
+  if(node){
+    node_dist = rdist(node->x, node->y, x, y);
+  }
   // TODO implement for edges too
   if((node_dist < hover_dist) && (node_id != -1)){
     ctl->hovered[0] = node_id;
@@ -57,6 +61,7 @@ void ctl_handler(Ctl		*ctl,
   switch (ctl->state) {
   case ADD_N:
     add_node(ctl->graph, x, y);
+    set_hovered(ctl, x, y);
     break;
   default:
     break;

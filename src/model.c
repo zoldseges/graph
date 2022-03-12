@@ -48,13 +48,12 @@ int nodes_filter_one(int (*f)(Node *n, gpointer d),
   walk_nodes(&curr_node, g);
   while(curr_node){
     curr_int = f(curr_node, d);
-    walk_nodes(&curr_node, NULL);
-
     DEBUG_NEGINT(curr_int);
     if(curr_int < min_int) {
       min_node = curr_node;
       min_int = curr_int;
     }
+    walk_nodes(&curr_node, NULL);
   }
 
   if(min_node){
