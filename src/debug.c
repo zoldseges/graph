@@ -22,7 +22,7 @@ void zero_error(int num, char *filename, int linenum, const char *func)
     fprintf(stderr, "%s:", filename);
     fprintf(stderr, "%d:", linenum);
     fprintf(stderr, "%d: ", 0);
-    fprintf(stderr, "NULL exception in `%s`\n", func);
+    fprintf(stderr, "0 exception in `%s`\n", func);
     exit(1);
   }
 }
@@ -36,6 +36,14 @@ void negint_error(int num, char *filename, int linenum, const char *func)
     fprintf(stderr, "NEG exception in `%s`\n", func);
     exit(1);
   }
+}
+
+void unreachable_error(char *filename, int linenum, const char *func){
+  fprintf(stderr, "%s:", filename);
+  fprintf(stderr, "%d:", linenum);
+  fprintf(stderr, "%d: ", 0);
+  fprintf(stderr, "UNREACHABLE `%s`\n", func);
+  exit(1);
 }
 
 void print_node(Node *n, UNUSED gpointer d)
@@ -103,6 +111,9 @@ void print_hovered(Ctl *ctl,
       printf("x: %.2f ", curr->elem[1]->p.x);
       printf("y: %.2f\n", curr->elem[1]->p.y);
       break;
+    default:
+      UNREACHABLE();
+      break;
     }
     printf("\n");
     curr = curr->next;
@@ -142,6 +153,9 @@ void print_selected(Ctl *ctl,
       printf("%6s%3d \\", " ", curr->elem[1]->id);
       printf("x: %.2f ", curr->elem[1]->p.x);
       printf("y: %.2f\n", curr->elem[1]->p.y);
+      break;
+    default:
+      UNREACHABLE();
       break;
     }
     printf("\n");

@@ -20,6 +20,21 @@ enum MARKED marked_type(Marked *marked)
   return ret;
 }
 
+void marked_call(void (*f)(Node *node[2], gpointer d),
+		 Marked *marked,
+		 enum MARKED type,
+		 gpointer d)
+{
+  Marked *curr = marked;
+  
+  while(curr){
+    if((marked_type(curr) == type) || (ANY == type)){
+      f(marked->elem, d);
+    }
+    curr = curr->next;
+  }
+}
+
 void set_marked(Marked *m, Node *node1, Node *node2)
 {
   m->elem[0] = node1;
@@ -82,6 +97,7 @@ void init_ctl(Ctl *ctl)
   DEBUG_NULL(ctl->selected);
 }
 
+// TODO merge ctl states and events
 void ctl_handler(Ctl *ctl)
 {
   /* state */
@@ -89,8 +105,16 @@ void ctl_handler(Ctl *ctl)
   case ADD_N:
     add_node(ctl->graph, ctl->pos);
     set_hovered(ctl, ctl->pos);
+    ctl->event = EMPTY_EVENT;
+    break;
+
+  case SELECT_N:
+    ctl->event = EMPTY_EVENT;
+    break;
+  case EMPTY_STATE:
     break;
   default:
+    UNREACHABLE();
     break;
   }
 
@@ -99,7 +123,11 @@ void ctl_handler(Ctl *ctl)
   case MOTION:
     set_hovered(ctl, ctl->pos);
     break;
+  case EMPTY_EVENT:
+    break;
   default:
+    printf("%d\n", ctl->event);
+    UNREACHABLE();
     break;
   }
   gtk_widget_queue_draw(ctl->drawing_area);

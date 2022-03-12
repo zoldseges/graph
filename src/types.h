@@ -35,7 +35,7 @@ typedef struct Ctl Ctl;
  */
 
 enum STATE {
-  EMPTY,
+  EMPTY_STATE,
   ADD_N,
   MOVE_N,
   SELECT_N,
@@ -48,6 +48,7 @@ enum STATE {
 };
 
 enum EVENT {
+  EMPTY_EVENT,
   MOTION,
   L_CLICK,
   R_CLICK,
@@ -65,6 +66,7 @@ enum MARKED {
   NONE,
   NODE,
   EDGE,
+  ANY,
 };
 
 struct Marked {

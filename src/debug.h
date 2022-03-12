@@ -11,6 +11,7 @@
 void null_error(void *p, char *filename, int linum, const char *func);
 void zero_error(int num, char *filename, int linum, const char *func);
 void negint_error(int num, char *filename, int linum, const char *func);
+void unreachable_error(char *filename, int linum, const char *func);
 
 void print_graph(Graph *g, char *filename, int linum, const char *func);
 void print_pos(Point p,
@@ -31,12 +32,14 @@ void print_selected(Ctl *ctl,
   #define DEBUG_NULL(p) null_error(p, __FILE__, __LINE__, __func__)
   #define DEBUG_ZERO(n) zero_error(n, __FILE__, __LINE__, __func__)
   #define DEBUG_NEGINT(n) negint_error(n, __FILE__, __LINE__, __func__)
+  #define UNREACHABLE() unreachable_error(__FILE__, __LINE__, __func__)
 #else
   #define UNUSED
   #define UNIMPLEMENTED
   #define DEBUG_NULL(p)
   #define DEBUG_ZERO(n)
   #define DEBUG_NEGINT(n)
+  #define UNREACHABLE()
 #endif /* DEBUG */
 
 #define PRINT_GRAPH(g) print_graph(g, __FILE__, __LINE__, __func__)

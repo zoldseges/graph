@@ -59,9 +59,12 @@ static void click_handler(	 GtkGestureClick	*gesture,
     case EDGE:
       ctl->state = SELECT_E;
       break;
+    default:
+      UNREACHABLE();
+      break;
     }
     ctl_handler(ctl);
-    ctl->state = EMPTY;
+    ctl->state = EMPTY_STATE;
     break;
   }
 }

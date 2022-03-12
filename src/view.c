@@ -5,8 +5,17 @@
 #include "debug.h"
 #include "types.h"
 #include "model.h"
+#include "controller.h"
 
 #define NODE_R 5
+
+// TODO implement for edges too
+static void mark_hovered(Node *node[2], gpointer data)
+{
+  cairo_t *cr = (cairo_t *)data;
+  cairo_arc(cr, node[0]->p.x, node[0]->p.y, NODE_R, 0, 2*M_PI);
+  cairo_fill(cr);
+}
 
 static void draw_node(Node *node, gpointer data)
 {
@@ -30,9 +39,17 @@ void draw_cb(UNUSED	GtkDrawingArea	*dawing_area,
   cairo_paint(cr);
 
   /* draw nodes */
+  cairo_save(cr);
   cairo_set_source_rgb(cr, 0, 0, 0);
   nodes_call(draw_node, graph, (gpointer) cr);
+  cairo_restore(cr);
 
+  // TODO implement this part for edges too
+  /* mark hovered node */
+  cairo_save(cr);
+  cairo_set_source_rgb(cr, 0, 1, 0);
+  marked_call(mark_hovered, ctl->hovered, NODE, (gpointer) cr);
+  cairo_restore(cr);
 }
 
 // TODO ratinalize this function (it was copy-paste)

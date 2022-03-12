@@ -1,5 +1,6 @@
 * TODOS
-
+** merge ctl states and events
+   
 * MVC
 ** MVC:
      _--- USER  <-_
