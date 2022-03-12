@@ -29,17 +29,14 @@ void set_marked(Marked *m, Node *node1, Node *node2)
 int node_cursor_distance(Node *node, gpointer mouse_pos)
 {
   /* pos[0] = x, pos[1] = y */
-  gdouble *pos = (gpointer)mouse_pos;
-  return rdist(node->x, node->y, pos[0], pos[1]);
+  Point *pos = (Point *)mouse_pos;
+  return rdist(node->p, *pos);
 }
 
 // TODO implement for edges too
-void set_hovered(Ctl *ctl,
-		 gdouble x,
-		 gdouble y)
+void set_hovered(Ctl *ctl, Point mouse_pos)
 {
   const int hover_dist = 40;
-  double packed_pos[2] = {x, y};
 
   Node *node = NULL;
   
@@ -49,10 +46,10 @@ void set_hovered(Ctl *ctl,
   
   node = nodes_filter_one(node_cursor_distance,
 			  ctl->graph,
-			  packed_pos);
+			  (gpointer) &mouse_pos);
 
   if(node){
-    node_dist = rdist(node->x, node->y, x, y);
+    node_dist = rdist(node->p, mouse_pos);
   }
   // TODO implement for edges too
   if(node_dist < hover_dist){
@@ -85,15 +82,13 @@ void init_ctl(Ctl *ctl)
   DEBUG_NULL(ctl->selected);
 }
 
-void ctl_handler(Ctl		*ctl,
-		 gdouble	 x,
-		 gdouble	 y)
+void ctl_handler(Ctl *ctl)
 {
   /* state */
   switch (ctl->state) {
   case ADD_N:
-    add_node(ctl->graph, x, y);
-    set_hovered(ctl, x, y);
+    add_node(ctl->graph, ctl->pos);
+    set_hovered(ctl, ctl->pos);
     break;
   default:
     break;
@@ -102,7 +97,7 @@ void ctl_handler(Ctl		*ctl,
   /* event */
   switch (ctl->event) {
   case MOTION:
-    set_hovered(ctl, x, y);
+    set_hovered(ctl, ctl->pos);
     break;
   default:
     break;

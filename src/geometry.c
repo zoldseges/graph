@@ -1,8 +1,9 @@
 #include <gtk/gtk.h>
 #include <math.h>
+#include "types.h"
 
-int rdist(gdouble x1, gdouble y1, gdouble x2, gdouble y2)
+int rdist(Point p1, Point p2)
 {
-  return round(sqrt(((x1 - x2) * (x1 - x2)) + ((y1 - y2) * (y1 - y2)))); 
+  return round(sqrt((pow(p1.x - p2.x, 2) + pow(p1.y - p2.y, 2)))); 
 }  
 

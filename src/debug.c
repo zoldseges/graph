@@ -40,7 +40,7 @@ void negint_error(int num, char *filename, int linenum, const char *func)
 
 void print_node(Node *n, UNUSED gpointer d)
 {
-  printf("ID: %3d x: %f y: %f\n", n->id, n->x, n->y);
+  printf("ID: %3d x: %f y: %f\n", n->id, n->p.x, n->p.y);
 }
 
 void print_graph(Graph *g, char *filename, int linenum, const char *func)
@@ -55,8 +55,7 @@ void print_graph(Graph *g, char *filename, int linenum, const char *func)
   printf("-----------------------------\n");
 }
 
-void print_pos(gdouble x,
-	       gdouble y,
+void print_pos(Point p,
 	       char *filename,
 	       int linenum,
 	       const char *func)
@@ -66,7 +65,7 @@ void print_pos(gdouble x,
   printf("%d:", linenum);
   printf("%d: \n", 0);
   printf("in `%s`\n", func);
-  printf("mouse pos: x: %f y: %f\n", x, y);
+  printf("mouse pos: x: %f y: %f\n", p.x, p.y);
   printf("-----------------------------\n");
 }
 
@@ -92,17 +91,17 @@ void print_hovered(Ctl *ctl,
     case NODE:
       printf("%6s%6s  ", "TYPE: ", "NODE");
       printf("ID: %3d   ", curr->elem[0]->id);
-      printf("x: %.2f ", curr->elem[0]->x);
-      printf("x: %.2f ", curr->elem[0]->y);
+      printf("x: %.2f ", curr->elem[0]->p.x);
+      printf("y: %.2f ", curr->elem[0]->p.y);
       break;
     case EDGE:
       printf("%6s%6s  ", "TYPE: ", "EDGE");
       printf("%6s%3d /", "IDS: ", curr->elem[0]->id);
-      printf("x: %.2f ", curr->elem[0]->x);
-      printf("y: %.2f\n", curr->elem[0]->y);
+      printf("x: %.2f ", curr->elem[0]->p.x);
+      printf("y: %.2f\n", curr->elem[0]->p.y);
       printf("%6s%3d \\", " ", curr->elem[1]->id);
-      printf("x: %.2f ", curr->elem[1]->x);
-      printf("y: %.2f\n", curr->elem[1]->y);
+      printf("x: %.2f ", curr->elem[1]->p.x);
+      printf("y: %.2f\n", curr->elem[1]->p.y);
       break;
     }
     printf("\n");
@@ -132,17 +131,17 @@ void print_selected(Ctl *ctl,
     case NODE:
       printf("%6s%6s  ", "TYPE: ", "NODE");
       printf("ID: %3d   ", curr->elem[0]->id);
-      printf("x: %.2f ", curr->elem[0]->x);
-      printf("x: %.2f ", curr->elem[0]->y);
+      printf("x: %.2f ", curr->elem[0]->p.x);
+      printf("x: %.2f ", curr->elem[0]->p.y);
       break;
     case EDGE:
       printf("%6s%6s  ", "TYPE: ", "EDGE");
       printf("%6s%3d /", "IDS: ", curr->elem[0]->id);
-      printf("x: %.2f ", curr->elem[0]->x);
-      printf("y: %.2f\n", curr->elem[0]->y);
+      printf("x: %.2f ", curr->elem[0]->p.x);
+      printf("y: %.2f\n", curr->elem[0]->p.y);
       printf("%6s%3d \\", " ", curr->elem[1]->id);
-      printf("x: %.2f ", curr->elem[1]->x);
-      printf("y: %.2f\n", curr->elem[1]->y);
+      printf("x: %.2f ", curr->elem[1]->p.x);
+      printf("y: %.2f\n", curr->elem[1]->p.y);
       break;
     }
     printf("\n");

@@ -11,7 +11,7 @@
 static void draw_node(Node *node, gpointer data)
 {
   cairo_t *cr = (cairo_t *)data;
-  cairo_arc(cr, node->x, node->y, NODE_R, 0, 2*M_PI);
+  cairo_arc(cr, node->p.x, node->p.y, NODE_R, 0, 2*M_PI);
   cairo_fill(cr);
 }
 

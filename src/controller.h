@@ -8,9 +8,7 @@ void init_ctl(Ctl *ctl);
 
 enum MARKED marked_type(Marked *marked);
 
-void ctl_handler(Ctl *ctl,
-	     gdouble x,
-	     gdouble y);
+void ctl_handler(Ctl *ctl);
 
 void free_ctl(Ctl *ctl);
 

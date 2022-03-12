@@ -71,12 +71,11 @@ void nodes_call(void (*f)(Node *n, gpointer d),
 
 
 // TODO update adj_matrix
-void add_node(Graph *graph, gdouble x, gdouble y)
+void add_node(Graph *graph, Point pos)
 {
   Node *new = calloc(1, sizeof(Node));
   
-  new->x = x;
-  new->y = y;
+  new->p = pos;
   new->next = NULL;
 
   graph->node_cnt++;
@@ -100,8 +99,7 @@ void delete_node(UNUSED Graph *graph,
 
 void move_node(UNUSED Graph *graph,
 	       UNUSED Node *node,
-	       UNUSED gdouble x,
-	       UNUSED gdouble y)
+	       UNUSED Point pos)
 {
   UNIMPLEMENTED;
 }

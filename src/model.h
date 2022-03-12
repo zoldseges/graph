@@ -3,9 +3,9 @@
 
 #include "types.h"
 
-void add_node(Graph *graph, gdouble x, gdouble y);
+void add_node(Graph *graph, Point p);
 void delete_node(Graph *graph, Node *node);
-void move_node(Graph *graph, Node *node, gdouble x, gdouble y);
+void move_node(Graph *graph, Node *node, Point p);
 
 void add_edge(Graph *graph, Node *node_from, Node *node_to);
 void delete_edge(Graph *graph, Node *node_from, Node *node_to);

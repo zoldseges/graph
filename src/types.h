@@ -18,10 +18,7 @@ struct Point {
 
 struct Node {
   int id;
-  // TDOD
-  /* Point point; */
-  gdouble x;
-  gdouble y;
+  Point p;
   Node *next;
 };
 
@@ -86,9 +83,7 @@ struct Ctl {
   enum STATE state;
   enum EVENT event;
   
-  
-  gdouble x;
-  gdouble y;
+  Point pos;
   
   /* model
    */

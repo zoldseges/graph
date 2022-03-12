@@ -13,7 +13,7 @@ void zero_error(int num, char *filename, int linum, const char *func);
 void negint_error(int num, char *filename, int linum, const char *func);
 
 void print_graph(Graph *g, char *filename, int linum, const char *func);
-void print_pos(gdouble x, gdouble y,
+void print_pos(Point p,
 	       char *filename,
 	       int linenum,
 	       const char *func);
@@ -40,7 +40,7 @@ void print_selected(Ctl *ctl,
 #endif /* DEBUG */
 
 #define PRINT_GRAPH(g) print_graph(g, __FILE__, __LINE__, __func__)
-#define PRINT_POS(x, y) print_pos(x, y, __FILE__, __LINE__, __func__)
+#define PRINT_POS(p) print_pos(p, __FILE__, __LINE__, __func__)
 #define PRINT_HOVERED(c) print_hovered(c, __FILE__, __LINE__, __func__)
 #define PRINT_SELECTED(c) print_selected(c, __FILE__, __LINE__, __func__)
 
