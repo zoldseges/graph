@@ -77,9 +77,15 @@ void set_hovered(Ctl *ctl, Point mouse_pos)
 
 void init_ctl(Ctl *ctl)
 {
+  const int init_m_size = 8 * 8;
+
   ctl->graph	= calloc(1, sizeof(Graph));
   ctl->hovered	= calloc(1, sizeof(Marked));
   ctl->selected = calloc(1, sizeof(Marked));
+
+  DEBUG_NULL(ctl->graph);
+  DEBUG_NULL(ctl->hovered);
+  DEBUG_NULL(ctl->selected);
 
   ctl->hovered->next	= NULL;
   ctl->hovered->elem[0] = NULL;
@@ -91,10 +97,14 @@ void init_ctl(Ctl *ctl)
   ctl->selected->elem[1] = NULL;
   ctl->selected->next	 = NULL;
 
+  ctl->graph->node_cnt = 0;
 
-  DEBUG_NULL(ctl->graph);
-  DEBUG_NULL(ctl->hovered);
-  DEBUG_NULL(ctl->selected);
+  ctl->graph->m_size = init_m_size;
+  ctl->graph->adj_m = malloc(init_m_size * sizeof(int));
+  DEBUG_NULL(ctl->graph->adj_m);
+  for(int i = 0; i < init_m_size; i++) {
+    ctl->graph->adj_m[i] = -1;
+  }
 }
 
 // TODO merge ctl states and events

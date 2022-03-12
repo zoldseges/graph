@@ -70,7 +70,22 @@ void nodes_call(void (*f)(Node *n, gpointer d),
 }
 
 
-// TODO update adj_matrix
+void grow_matrix(Graph *graph)
+{
+  int *new_m = NULL;
+  // crash on overflow
+  DEBUG_ZERO(graph->m_size < (graph->m_size * 4));
+  // double both directions
+  graph->m_size *= 4;
+  new_m = realloc(graph->adj_m, graph->m_size);
+  DEBUG_NULL(new_m);
+  // initialize newly allocated memory
+  for(int i = graph->node_cnt; i < graph->m_size; i++){
+    new_m[i] = -1;
+  }
+  graph->adj_m = new_m;
+}
+
 void add_node(Graph *graph, Point pos)
 {
   Node *new = calloc(1, sizeof(Node));
@@ -78,16 +93,23 @@ void add_node(Graph *graph, Point pos)
   new->p = pos;
   new->next = NULL;
 
-  graph->node_cnt++;
-
   if(!graph->head){
-    new->id = 1;
+    new->id = 0;
     graph->head = new;
     graph->tail = new;
   } else {
     new->id = graph->node_cnt;
     graph->tail->next = new;
     graph->tail = new;
+  }
+
+  graph->node_cnt++;
+
+  // crash if node_cnt > sqrt(m_size)
+  DEBUG_ZERO(!((graph->node_cnt * graph->node_cnt) >
+	      (graph->m_size)));
+  if(graph->m_size == (graph->node_cnt * graph->node_cnt)) {
+    grow_matrix(graph);
   }
 }
 
@@ -104,11 +126,11 @@ void move_node(UNUSED Graph *graph,
   UNIMPLEMENTED;
 }
 
-void add_edge(UNUSED Graph *graph,
-	      UNUSED Node *node_from,
-	      UNUSED Node *node_to)
+void add_edge(Graph *graph,
+	      Node *node_from,
+	      Node *node_to)
 {
-  UNIMPLEMENTED;
+  
 }
 
 void delete_edge(UNUSED Graph *graph,

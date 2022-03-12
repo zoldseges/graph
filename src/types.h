@@ -26,7 +26,8 @@ struct Graph {
   Node *head;
   Node *tail;
   int node_cnt; // node count
-  int **adj_m;  // adjacency matrix
+  int *adj_m;  // adjacency matrix
+  int m_size;
 };
 
 typedef struct Ctl Ctl;
