@@ -6,12 +6,12 @@
 #include "types.h"
 #include "model.h"
 
-static const int node_r = 5;
+#define NODE_R 5
 
 static void draw_node(Node *node, gpointer data)
 {
   cairo_t *cr = (cairo_t *)data;
-  cairo_arc(cr, node->x, node->y, node_r, 0, 2*M_PI);
+  cairo_arc(cr, node->x, node->y, NODE_R, 0, 2*M_PI);
   cairo_fill(cr);
 }
 
@@ -29,9 +29,10 @@ void draw_cb(UNUSED	GtkDrawingArea	*dawing_area,
   cairo_set_source_rgb(cr, 1, 1, 1);
   cairo_paint(cr);
 
+  /* draw nodes */
   cairo_set_source_rgb(cr, 0, 0, 0);
-
   nodes_call(draw_node, graph, (gpointer) cr);
+
 }
 
 // TODO ratinalize this function (it was copy-paste)
