@@ -10,7 +10,7 @@
 #define NODE_R 5
 
 // TODO implement for edges too
-static void mark_hovered(Node *node[2], gpointer data)
+static void mark_node(Node *node[2], gpointer data)
 {
   cairo_t *cr = (cairo_t *)data;
   cairo_arc(cr, node[0]->p.x, node[0]->p.y, NODE_R, 0, 2*M_PI);
@@ -35,12 +35,12 @@ void draw_cb(UNUSED	GtkDrawingArea	*dawing_area,
   cairo_surface_t *surface = ctl->surface;
 
   cairo_set_source_surface(cr, surface, 0, 0);
-  cairo_set_source_rgb(cr, 1, 1, 1);
+  cairo_set_source_rgb(cr, 0, 0, 0);
   cairo_paint(cr);
 
   /* draw nodes */
   cairo_save(cr);
-  cairo_set_source_rgb(cr, 0, 0, 0);
+  cairo_set_source_rgb(cr, 1, 1, 1);
   nodes_call(draw_node, graph, (gpointer) cr);
   cairo_restore(cr);
 
@@ -48,7 +48,13 @@ void draw_cb(UNUSED	GtkDrawingArea	*dawing_area,
   /* mark hovered node */
   cairo_save(cr);
   cairo_set_source_rgb(cr, 0, 1, 0);
-  marked_call(mark_hovered, ctl->hovered, NODE, (gpointer) cr);
+  marked_call(mark_node, ctl->hovered, NODE, (gpointer) cr);
+  cairo_restore(cr);
+
+  /* mark selected node */
+  cairo_save(cr);
+  cairo_set_source_rgb(cr, 1, 0, 0);
+  marked_call(mark_node, ctl->selected, NODE, (gpointer) cr);
   cairo_restore(cr);
 }
 

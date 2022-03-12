@@ -84,12 +84,12 @@ void init_ctl(Ctl *ctl)
   ctl->hovered->next	= NULL;
   ctl->hovered->elem[0] = NULL;
   ctl->hovered->elem[1] = NULL;
-  ctl->hovered->next = NULL;
+  ctl->hovered->next	= NULL;
 
   ctl->selected->next	 = NULL;
   ctl->selected->elem[0] = NULL;
   ctl->selected->elem[1] = NULL;
-  ctl->selected->next = NULL;
+  ctl->selected->next	 = NULL;
 
 
   DEBUG_NULL(ctl->graph);
@@ -100,34 +100,54 @@ void init_ctl(Ctl *ctl)
 // TODO merge ctl states and events
 void ctl_handler(Ctl *ctl)
 {
-  /* state */
-  switch (ctl->state) {
-  case ADD_N:
-    add_node(ctl->graph, ctl->pos);
-    set_hovered(ctl, ctl->pos);
-    ctl->event = EMPTY_EVENT;
-    break;
-
-  case SELECT_N:
-    ctl->event = EMPTY_EVENT;
-    break;
-  case EMPTY_STATE:
-    break;
-  default:
-    UNREACHABLE();
-    break;
-  }
-
-  /* event */
-  switch (ctl->event) {
+  switch(ctl->event) {
   case MOTION:
-    set_hovered(ctl, ctl->pos);
+    switch(ctl->mode) {
+
+    case ADD_NODE:
+    case SELECT:
+      set_hovered(ctl, ctl->pos);
+      ctl->mode = SELECT;
+      break;
+      
+    default:
+      fprintf(stderr, "case: %d\n", ctl->event);
+      UNIMPLEMENTED;
+      break;
+    }
     break;
-  case EMPTY_EVENT:
+    /* MOTION END */
+  case L_CLICK:
+    /* set mode */
+    if(marked_type(ctl->hovered) == NONE) {
+      ctl->mode = ADD_NODE;
+    }
+
+    /* act */
+    switch(ctl->mode) {
+      
+    case ADD_NODE:
+      add_node(ctl->graph, ctl->pos);
+      set_marked(ctl->selected, NULL, NULL);
+      set_hovered(ctl, ctl->pos);
+      break;
+      
+    case SELECT:
+      set_marked(ctl->selected,
+		 ctl->hovered->elem[0],
+		 ctl->hovered->elem[1]);
+      break;
+      
+    default:
+      fprintf(stderr, "case: %d\n", ctl->event);
+      UNIMPLEMENTED;
+      break;
+    }
     break;
+    /* L_CLICK END */
   default:
-    printf("%d\n", ctl->event);
-    UNREACHABLE();
+    fprintf(stderr, "case: %d\n", ctl->event);
+    UNIMPLEMENTED;
     break;
   }
   gtk_widget_queue_draw(ctl->drawing_area);

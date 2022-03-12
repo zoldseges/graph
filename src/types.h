@@ -31,37 +31,6 @@ struct Graph {
 
 typedef struct Ctl Ctl;
 
-/* Controller
- */
-
-enum STATE {
-  EMPTY_STATE,
-  ADD_N,
-  MOVE_N,
-  SELECT_N,
-  DEL_N,
-  STRT_E,
-  END_E,
-  SELECT_E,
-  DEL_E,
-  PAN,
-};
-
-enum EVENT {
-  EMPTY_EVENT,
-  MOTION,
-  L_CLICK,
-  R_CLICK,
-  L_DRAG_BEGIN,
-  R_DRAG_BEGIN,
-  L_DRAG_UPDATE,
-  R_DRAG_UPDATE,
-  L_DRAG_END,
-  R_DRAG_END,
-  DESTROY,
-  RESIZE,
-};
-
 enum MARKED {
   NONE,
   NODE,
@@ -78,21 +47,45 @@ struct Marked {
   Marked *next;
 };
 
+enum EVENT {
+  MOTION,
+  L_CLICK,
+  M_CLICK,
+  R_CLICK,
+  SCROLL_UP,
+  SCROLL_DOWN,
+  L_DRAG_BEGIN,
+  R_DRAG_BEGIN,
+  L_DRAG_UPDATE,
+  R_DRAG_UPDATE,
+  L_DRAG_END,
+  R_DRAG_END,
+  DESTROY,
+  RESIZE,
+};
+
+enum MODE {
+  ADD_NODE,
+  MOVE_NODE,
+  BEGIN_EDGE,
+  END_EDGE,
+  SELECT,
+  DELETE,
+};
+
 struct Ctl {
+  /* control */
+  enum MODE mode;
   Marked *hovered;
   Marked *selected;
-  
-  enum STATE state;
-  enum EVENT event;
-  
   Point pos;
-  
-  /* model
-   */
+
+  enum EVENT event;
+
+  /* model */
   Graph *graph;
 
-  /* view
-   */
+  /* view */
   cairo_surface_t *surface;
   GtkWidget *drawing_area;
 };

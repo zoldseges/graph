@@ -5,44 +5,45 @@
 #include "model.h"
 #include "controller.h"
 
-void null_error(void *p, char *filename, int linenum, const char *func)
+void null_error(void *p, char *fname, int linum, const char *func)
 {
   if(p == NULL){
-    fprintf(stderr, "%s:", filename);
-    fprintf(stderr, "%d:", linenum);
+    fprintf(stderr, "%s:", fname);
+    fprintf(stderr, "%d:", linum);
     fprintf(stderr, "%d: ", 0);
     fprintf(stderr, "NULL exception in `%s`\n", func);
     exit(1);
   }
 }
 
-void zero_error(int num, char *filename, int linenum, const char *func)
+void zero_error(int num, char *fname, int linum, const char *func)
 {
   if(!num){
-    fprintf(stderr, "%s:", filename);
-    fprintf(stderr, "%d:", linenum);
+    fprintf(stderr, "%s:", fname);
+    fprintf(stderr, "%d:", linum);
     fprintf(stderr, "%d: ", 0);
     fprintf(stderr, "0 exception in `%s`\n", func);
     exit(1);
   }
 }
 
-void negint_error(int num, char *filename, int linenum, const char *func)
+void negint_error(int num, char *fname, int linum, const char *func)
 {
   if(num < 0){
-    fprintf(stderr, "%s:", filename);
-    fprintf(stderr, "%d:", linenum);
+    fprintf(stderr, "%s:", fname);
+    fprintf(stderr, "%d:", linum);
     fprintf(stderr, "%d: ", 0);
     fprintf(stderr, "NEG exception in `%s`\n", func);
     exit(1);
   }
 }
 
-void unreachable_error(char *filename, int linenum, const char *func){
-  fprintf(stderr, "%s:", filename);
-  fprintf(stderr, "%d:", linenum);
+void unreachable_error(int n, char *fname, int linum, const char *func)
+{
+  fprintf(stderr, "%s:", fname);
+  fprintf(stderr, "%d:", linum);
   fprintf(stderr, "%d: ", 0);
-  fprintf(stderr, "UNREACHABLE `%s`\n", func);
+  fprintf(stderr, "UNREACHABLE inf `%s` case %d\n", func, n);
   exit(1);
 }
 
@@ -51,11 +52,11 @@ void print_node(Node *n, UNUSED gpointer d)
   printf("ID: %3d x: %f y: %f\n", n->id, n->p.x, n->p.y);
 }
 
-void print_graph(Graph *g, char *filename, int linenum, const char *func)
+void print_graph(Graph *g, char *fname, int linum, const char *func)
 {
   printf("print_graph called on ");
-  printf("%s:", filename);
-  printf("%d:", linenum);
+  printf("%s:", fname);
+  printf("%d:", linum);
   printf("%d: \n", 0);
   printf("in `%s`\n", func);
   printf("Graph:\n");
@@ -63,14 +64,11 @@ void print_graph(Graph *g, char *filename, int linenum, const char *func)
   printf("-----------------------------\n");
 }
 
-void print_pos(Point p,
-	       char *filename,
-	       int linenum,
-	       const char *func)
+void print_pos(Point p, char *fname, int linum, const char *func)
 {
   printf("print_pos called on ");
-  printf("%s:", filename);
-  printf("%d:", linenum);
+  printf("%s:", fname);
+  printf("%d:", linum);
   printf("%d: \n", 0);
   printf("in `%s`\n", func);
   printf("mouse pos: x: %f y: %f\n", p.x, p.y);
@@ -78,16 +76,13 @@ void print_pos(Point p,
 }
 
 
-void print_hovered(Ctl *ctl,
-		   char *filename,
-		   int linenum,
-		   const char *func)
+void print_hovered(Ctl *ctl, char *fname, int linum, const char *func)
 {
   Marked *curr = ctl->hovered;
 
   printf("print_hovered called on ");
-  printf("%s:", filename);
-  printf("%d:", linenum);
+  printf("%s:", fname);
+  printf("%d:", linum);
   printf("%d: \n", 0);
   printf("in `%s`\n", func);
 
@@ -112,7 +107,7 @@ void print_hovered(Ctl *ctl,
       printf("y: %.2f\n", curr->elem[1]->p.y);
       break;
     default:
-      UNREACHABLE();
+      UNREACHABLE(marked_type(curr));
       break;
     }
     printf("\n");
@@ -121,16 +116,13 @@ void print_hovered(Ctl *ctl,
   printf("-----------------------------\n");
 }
 
-void print_selected(Ctl *ctl,
-		   char *filename,
-		   int linenum,
-		   const char *func)
+void print_selected(Ctl *ctl, char *fname, int linum, const char *func)
 {
   Marked *curr = ctl->selected;
 
-  printf("print_hovered called on ");
-  printf("%s:", filename);
-  printf("%d:", linenum);
+  printf("print_selected called on ");
+  printf("%s:", fname);
+  printf("%d:", linum);
   printf("%d: \n", 0);
   printf("in `%s`\n", func);
 
@@ -155,7 +147,7 @@ void print_selected(Ctl *ctl,
       printf("y: %.2f\n", curr->elem[1]->p.y);
       break;
     default:
-      UNREACHABLE();
+      UNREACHABLE(marked_type(curr));
       break;
     }
     printf("\n");
