@@ -1,4 +1,3 @@
-#include <gtk/gtk.h>
 #include <math.h>
 #include "types.h"
 

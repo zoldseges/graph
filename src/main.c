@@ -127,7 +127,7 @@ int main(int argc, char *argv[]) {
   GtkApplication *app;
   int status;
   Ctl ctl = {0};
-  init_ctl(&ctl);
+  ctl_init(&ctl);
 
   app = gtk_application_new("hu.plkvcs.graph", G_APPLICATION_FLAGS_NONE);
   g_signal_connect(app, "activate", G_CALLBACK(activate), (gpointer) &ctl);

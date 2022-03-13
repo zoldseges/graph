@@ -34,8 +34,11 @@ struct Node {
 struct Graph {
   Node *head;
   Node *tail;
-  int node_cnt; // node count
-  int *adj_m;  // adjacency matrix
+  int node_cnt;
+  /* ** beacuse of memory bug.
+   * reproduce commit 8f063c1
+   */
+  int **adj_m;
   int row_sz;
 };
 

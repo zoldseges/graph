@@ -1,7 +1,5 @@
-#include <math.h>
 #include "debug.h"
 #include "types.h"
-#include "view.h"
 #include "model.h"
 #include "geometry.h"
 
@@ -31,6 +29,7 @@ Node *get_node_by_id(Graph *graph, int id)
 
 Node *select_node(UNUSED Graph *graph, UNUSED int id)
 {
+  UNIMPLEMENTED;
   Node *curr = NULL;
   return curr;
 }
@@ -150,9 +149,10 @@ void set_hovered(Ctl *ctl, Point mouse_pos)
   DEBUG_NEGINT(node_dist);
 }
 
-void init_ctl(Ctl *ctl)
+void ctl_init(Ctl *ctl)
 {
-  const int init_row_sz = 8;
+  /* const int init_row_sz = 8; */
+  const int init_row_sz = 2;
 
   ctl->graph	= calloc(1, sizeof(Graph));
   ctl->hovered	= calloc(1, sizeof(Marked));
@@ -175,11 +175,18 @@ void init_ctl(Ctl *ctl)
   ctl->graph->node_cnt = 0;
 
   ctl->graph->row_sz = init_row_sz;
-  ctl->graph->adj_m = malloc(init_row_sz * init_row_sz * sizeof(int));
+  ctl->graph->adj_m = malloc(sizeof(int*));
   DEBUG_NULL(ctl->graph->adj_m);
+  *(ctl->graph->adj_m) =
+    malloc(init_row_sz * init_row_sz * sizeof(int));
+  DEBUG_NULL(*(ctl->graph->adj_m));
   for(int i = 0; i < init_row_sz; i++) {
     for(int j = 0; j < init_row_sz; j++) {
-      *(ctl->graph->adj_m + (init_row_sz * i) + j) = -1;
+      Node from = {0};
+      Node to = {0};
+      from.id = i;
+      to.id = j;
+      set_edge_weight(ctl->graph, &from, &to, -1);
     }
   }
 }
