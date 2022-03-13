@@ -1,8 +1,4 @@
 /* error checking only enabled if not optimized */
-#ifndef __OPTIMIZE__
-#define DEBUG
-#endif
-
 #ifndef DEBUG_H__
 #define DEBUG_H__
 
@@ -27,7 +23,7 @@ void print_selected(Ctl *ctl, char *fname, int linum, const char *func);
   #define DEBUG_NULL(p) null_error(p, __FILE__, __LINE__, __func__)
   #define DEBUG_ZERO(n) zero_error(n, __FILE__, __LINE__, __func__)
   #define DEBUG_NEGINT(n) negint_error(n, __FILE__, __LINE__, __func__)
-#define UNREACHABLE(c) unreachable_error(c, __FILE__, __LINE__, __func__)
+  #define UNREACHABLE(c) unreachable_error(c, __FILE__, __LINE__, __func__)
 #else
   #define UNUSED
   #define UNIMPLEMENTED

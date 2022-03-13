@@ -1,7 +1,6 @@
 CC := gcc
-RELEASE_FLAGS := -Werror
-DEBUG_FLAGS := -O0 -g
-RELEASE_FLAGS := -O3
+DEBUG_FLAGS := -g -DDEBUG
+RELEASE_FLAGS := -O3 -Werror
 CFLAGS_BASE := -pedantic-errors -Wall -Wextra
 SRCS := $(wildcard src/*.c)
 HEADERS := $(wildcard src/*.h)
