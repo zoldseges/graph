@@ -77,7 +77,8 @@ void grow_matrix(Graph *graph)
   DEBUG_ZERO(graph->row_sz < (graph->row_sz * 2));
   // double both directions
   graph->row_sz *= 2;
-  new_m = realloc(graph->adj_m, graph->row_sz * graph->row_sz);
+  new_m = realloc(graph->adj_m,
+		  graph->row_sz * graph->row_sz * sizeof(int));
   DEBUG_NULL(new_m);
 
   // initialize newly allocated memory
