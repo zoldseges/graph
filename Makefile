@@ -13,8 +13,8 @@ LIBS := $(shell pkg-config --libs $(PKGS)) -lm
 debug: $(OBJS)
 	$(CC) -o $@    $^ $(CFLAGS) $(LIBS) $(DEBUG_FLAGS) 
 
-build/main.o: src/main.c
-	$(CC) -o $@ -c $^ $(CFLAGS) $(LIBS) $(DEBUG_FLAGS)
+build/main.o: src/main.c $(HEADERS)
+	$(CC) -o $@ -c $< $(CFLAGS) $(LIBS) $(DEBUG_FLAGS)
 
 build/%.o: src/%.c src/%.h
 	$(CC) -o $@ -c $< $(CFLAGS) $(LIBS) $(DEBUG_FLAGS)
