@@ -1,7 +1,8 @@
+debug
 graph
-release
 test/test
 TAGS
+build
 example
 .cache
 compile_commands.json
