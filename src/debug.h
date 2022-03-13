@@ -1,4 +1,4 @@
-/* error checking only enabled if not optimized */
+/* error checking compiler flag -DDEBUG */
 #ifndef DEBUG_H__
 #define DEBUG_H__
 
@@ -16,7 +16,7 @@ void print_hovered(Ctl *ctl, char *fname, int linum, const char *func);
 
 void print_selected(Ctl *ctl, char *fname, int linum, const char *func);
 
-
+/* if flag -DDEBUG on */
 #ifdef DEBUG
   #define UNUSED __attribute__((unused))
   #define UNIMPLEMENTED assert(0)
