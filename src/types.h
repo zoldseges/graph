@@ -10,6 +10,23 @@ typedef struct Marked Marked;
 typedef struct Node Node;
 typedef struct Graph Graph;
 typedef struct Point Point;
+typedef struct Matrix Matrix;
+
+/**************************************/
+/* sm struct matrix		      */
+/* it represents the adjecency matrix */
+/* INF = INT_MAX => no connection     */
+/* 				      */
+/*           to to		      */
+/*      [ INF xxx xxx INF ]	      */
+/* from [ xxx INF xxx INF ]	      */
+/* from [ xxx xxx INF INF ]	      */
+/*      [ INF INF INF INF ]	      */
+/**************************************/
+struct Matrix {
+  int *pm;
+  int row_sz;
+};
 
 struct Point {
   gdouble x;
@@ -22,24 +39,11 @@ struct Node {
   Node *next;
 };
 
-/******************************/
-/* adj_m: -1 => no connection */
-/* 			      */
-/*           to to	      */
-/*      [ -1 xx xx -1 ]	      */
-/* from [ xx -1 xx -1 ]	      */
-/* from [ xx xx -1 -1 ]	      */
-/*      [ -1 -1 -1 -1 ]	      */
-/******************************/
 struct Graph {
   Node *head;
   Node *tail;
   int node_cnt;
-  /* ** beacuse of memory bug.
-   * reproduce commit 8f063c1
-   */
-  int **adj_m;
-  int row_sz;
+  Matrix sm;
 };
 
 typedef struct Ctl Ctl;

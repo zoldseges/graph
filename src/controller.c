@@ -1,7 +1,8 @@
+#include <limits.h>
 #include "debug.h"
 #include "types.h"
 #include "model.h"
-#include "geometry.h"
+#include "graphmath.h"
 
 static void walk_nodes(Node **curr, const Graph *graph)
 {
@@ -174,19 +175,13 @@ void ctl_init(Ctl *ctl)
 
   ctl->graph->node_cnt = 0;
 
-  ctl->graph->row_sz = init_row_sz;
-  ctl->graph->adj_m = malloc(sizeof(int*));
-  DEBUG_NULL(ctl->graph->adj_m);
-  *(ctl->graph->adj_m) =
+  ctl->graph->sm.row_sz = init_row_sz;
+  ctl->graph->sm.pm =
     malloc(init_row_sz * init_row_sz * sizeof(int));
-  DEBUG_NULL(*(ctl->graph->adj_m));
+  DEBUG_NULL(ctl->graph->sm.pm);
   for(int i = 0; i < init_row_sz; i++) {
     for(int j = 0; j < init_row_sz; j++) {
-      Node from = {0};
-      Node to = {0};
-      from.id = i;
-      to.id = j;
-      set_edge_weight(ctl->graph, &from, &to, -1);
+      set_matrix(ctl->graph->sm, i, j, INT_MAX);
     }
   }
 }

@@ -14,10 +14,6 @@ static void motion_handler(UNUSED GtkEventControllerMotion	*self,
   ctl->pos.y = y;
   ctl->event = MOTION;
   ctl_handler(ctl);
-  PRINT_GRAPH(ctl->graph);
-  PRINT_POS(ctl->pos);
-  PRINT_HOVERED(ctl);
-  PRINT_SELECTED(ctl);
 }
 
     /*************************************************/
@@ -64,6 +60,7 @@ static void click_handler(	 GtkGestureClick	*gesture,
     break;
   }
   ctl_handler(ctl);
+  PRINT_MATRIX(ctl->graph->sm);
 }
  
 			  

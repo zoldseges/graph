@@ -21,5 +21,5 @@ build/%.o: src/%.c src/%.h
 release: $(SRCS) $(HEADERS)
 	$(CC) $(filter %.c,$^) -o graph $(CFLAGS) $(LIBS) $(RELEASE_FLAGS) 
 
-test: $(wildcard test/src/*)
+test: $(wildcard test/src/*) $(SRCS) $(HEADERS)
 	$(CC) test/src/main.c -o test/$@ $(CFLAGS) $(LIBS) $(DEBUG_FLAGS) 

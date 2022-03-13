@@ -11,6 +11,7 @@ void unreachable_error(int c, char *fname, int linum, const char *func);
 
 void print_graph(Graph *g, char *fname, int linum, const char *func);
 void print_pos(Point p, char *fname, int linenum, const char *func);
+void print_matrix(Matrix m, char *fname, int linum, const char *func);
 
 void print_hovered(Ctl *ctl, char *fname, int linum, const char *func);
 
@@ -37,5 +38,6 @@ void print_selected(Ctl *ctl, char *fname, int linum, const char *func);
 #define PRINT_POS(p) print_pos(p, __FILE__, __LINE__, __func__)
 #define PRINT_HOVERED(c) print_hovered(c, __FILE__, __LINE__, __func__)
 #define PRINT_SELECTED(c) print_selected(c, __FILE__, __LINE__, __func__)
+#define PRINT_MATRIX(m) print_matrix(m, __FILE__, __LINE__, __func__)
 
 #endif /* ERROR_H__ */

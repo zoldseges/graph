@@ -1,5 +1,3 @@
-#define DEBUG
-
 #include <gtk/gtk.h>
 
 #include "debug.h"

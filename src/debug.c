@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <stdlib.h>
+#include <limits.h>
 
 #include "debug.h"
 #include "model.h"
@@ -154,4 +154,37 @@ void print_selected(Ctl *ctl, char *fname, int linum, const char *func)
     curr = curr->next;
   }
   printf("-----------------------------\n");
+}
+
+void print_matrix(Matrix m, char *fname, int linum, const char *func)
+{
+  printf("print_matrix called on ");
+  printf("%s:", fname);
+  printf("%d:", linum);
+  printf("%d: \n", 0);
+  printf("in `%s`\n", func);
+  printf("Matrix:\n");
+  printf("+");
+  for(int i = 0; i < m.row_sz; i++) {
+    printf("----");
+  }
+  printf("+\n");
+  for(int i = 0; i < m.row_sz; i++) {
+    printf("|");
+    for(int j = 0; j < m.row_sz; j++) {
+      int val = *(m.pm + (m.row_sz * i) + j);
+      if(val == INT_MAX){
+	printf("INF ");
+      } else {
+	printf("%3d ", val);
+      }
+    }
+    printf("|\n");
+  }
+  printf("+");
+  for(int i = 0; i < m.row_sz; i++) {
+    printf("----");
+  }
+  printf("+");
+  printf("\n");
 }
