@@ -22,6 +22,14 @@ static void draw_node(Node *node, gpointer data)
   cairo_fill(cr);
 }
 
+static void draw_edge(Node *from, Node *to, UNUSED int weight, gpointer data)
+{
+  cairo_t *cr = (cairo_t *)data;
+  cairo_move_to(cr, from->p.x, from->p.y);
+  cairo_line_to(cr, to->p.x, to->p.y);
+  cairo_stroke(cr);
+}
+
 void draw_cb(UNUSED	GtkDrawingArea	*dawing_area,
 	     cairo_t		*cr,
 	     UNUSED	int		 width,
@@ -65,8 +73,22 @@ void draw_cb(UNUSED	GtkDrawingArea	*dawing_area,
   cairo_restore(cr);
 
   /* draw edges */
-  
+  cairo_save(cr);
+  cairo_set_source_rgb(cr, 0.9, 0.9, 0.9);
+  // TODO check how to restore linewidth
+  cairo_set_line_width(cr, 1);
+  edges_call(draw_edge, ctl->graph, cr);
+  cairo_restore(cr);
   /* update curr edge */
+  if(ctl->selected->elem[0]) {
+    cairo_save(cr);
+    cairo_set_source_rgb(cr, 1, 1, 1);
+    Node curr_pos = {0};
+    curr_pos.p.x = ctl->pos.x;
+    curr_pos.p.y = ctl->pos.y;
+    draw_edge(ctl->selected->elem[0], &curr_pos, 0, (gpointer) cr);
+    cairo_restore(cr);
+  }
 }
 
 // TODO ratinalize this function (it was copy-paste)

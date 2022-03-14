@@ -28,6 +28,24 @@ Node *get_node_by_id(Graph *graph, int id)
   return curr;
 }
 
+void edges_call(void (*f)(Node *from, Node *to, int weight, gpointer d),
+		Graph *graph,
+		gpointer d)
+{
+  for(int from_i = 0; from_i < graph->node_cnt; from_i++) {
+    for(int to_i = 0; to_i < graph->node_cnt; to_i++) {
+      int weight = *(graph->sm.pm + (graph->node_cnt * from_i) + to_i);
+      if( weight != INT_MAX ){
+	Node *from = get_node_by_id(graph, from_i); 
+	Node *to = get_node_by_id(graph, to_i);
+	f(from, to, weight, d);
+      }
+    }
+  }
+}
+
+
+
 Node *select_node(UNUSED Graph *graph, UNUSED int id)
 {
   UNIMPLEMENTED;

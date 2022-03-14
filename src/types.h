@@ -11,6 +11,7 @@ typedef struct Node Node;
 typedef struct Graph Graph;
 typedef struct Point Point;
 typedef struct Matrix Matrix;
+typedef struct Ctl Ctl;
 
 /**************************************/
 /* sm struct matrix		      */
@@ -45,8 +46,6 @@ struct Graph {
   int node_cnt;
   Matrix sm;
 };
-
-typedef struct Ctl Ctl;
 
 enum MARKED {
   NONE,

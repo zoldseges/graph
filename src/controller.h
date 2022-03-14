@@ -57,4 +57,13 @@ Node *nodes_filter_one(int (*f)(Node *n, gpointer d),
 Node *nodes_filter_all(gboolean (*f)(Node *n, gpointer d),
 		       Graph *g,
 		       gpointer d);
+
+/* runs a function on all edges of a graph
+ * function signature:
+ *   void f(Node *from, Node *to, int weight, gpointer d);
+ */
+void edges_call(void (*f)(Node *from, Node *to, int weight, gpointer d),
+		Graph *graph,
+		gpointer d);
+
 #endif /* CONTROLLER_H__ */
