@@ -5,7 +5,8 @@ TAGS
 .gdbinit
 .gdb_history
 build
-valgrind
+valgrind*
+bug*
 example
 .cache
 compile_commands.json
