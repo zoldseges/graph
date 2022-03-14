@@ -152,8 +152,7 @@ void set_hovered(Ctl *ctl, Point mouse_pos)
 
 void ctl_init(Ctl *ctl)
 {
-  /* const int init_row_sz = 8; */
-  const int init_row_sz = 2;
+  const int init_row_sz = 8;
 
   ctl->graph	= calloc(1, sizeof(Graph));
   ctl->hovered	= calloc(1, sizeof(Marked));
