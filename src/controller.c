@@ -101,13 +101,8 @@ void marked_call(void (*f)(Node *node[2], gpointer d),
 		 enum MARKED type,
 		 gpointer d)
 {
-  Marked *curr = marked;
-  
-  while(curr){
-    if((marked_type(curr) == type) || (ANY == type)){
-      f(marked->elem, d);
-    }
-    curr = curr->next;
+  if((marked_type(marked) == type) || (ANY == type)){
+    f(marked->elem, d);
   }
 }
 
@@ -163,15 +158,11 @@ void ctl_init(Ctl *ctl)
   DEBUG_NULL(ctl->hovered);
   DEBUG_NULL(ctl->selected);
 
-  ctl->hovered->next	= NULL;
   ctl->hovered->elem[0] = NULL;
   ctl->hovered->elem[1] = NULL;
-  ctl->hovered->next	= NULL;
 
-  ctl->selected->next	 = NULL;
   ctl->selected->elem[0] = NULL;
   ctl->selected->elem[1] = NULL;
-  ctl->selected->next	 = NULL;
 
   ctl->graph->node_cnt = 0;
 
@@ -189,8 +180,12 @@ void ctl_init(Ctl *ctl)
 // TODO merge ctl states and events
 void ctl_handler(Ctl *ctl)
 {
+  CLS();
+  PRINT_HOVERED(ctl);
+  PRINT_SELECTED(ctl);
   PRINT_MODE(ctl);
   PRINT_EVENT(ctl);
+  PRINT_MATRIX(ctl->graph->sm);
   switch(ctl->event) {
   case MOTION:
     switch(ctl->mode) {
@@ -201,9 +196,13 @@ void ctl_handler(Ctl *ctl)
       ctl->mode = SELECT;
       break;
       
+    case START_EDGE:
+    case END_EDGE:
+      set_hovered(ctl, ctl->pos);
+      ctl->mode = END_EDGE;
+      break;
     default:
-      fprintf(stderr, "case: %d\n", ctl->event);
-      UNIMPLEMENTED;
+      UNREACHABLE(ctl->mode);
       break;
     }
     break;
@@ -236,16 +235,30 @@ void ctl_handler(Ctl *ctl)
 		 ctl->hovered->elem[1]);
       break;
       
+    case START_EDGE:
+      set_marked(ctl->selected,
+		 ctl->hovered->elem[0],
+		 ctl->hovered->elem[1]);
+      set_marked(ctl->hovered, NULL, NULL);
+      break;
+    case END_EDGE:
+      set_marked(ctl->selected,
+		 ctl->selected->elem[0],
+		 ctl->hovered->elem[0]);
+      add_edge(ctl->graph,
+	       ctl->selected->elem[0],
+	       ctl->hovered->elem[0]);
+      set_marked(ctl->selected, NULL, NULL);
+      ctl->mode = SELECT;
+      break;
     default:
-      fprintf(stderr, "case: %d\n", ctl->event);
-      UNIMPLEMENTED;
+      UNREACHABLE(ctl->mode);
       break;
     }
     break;
     /* L_CLICK END */
   default:
-    fprintf(stderr, "case: %d\n", ctl->event);
-    UNIMPLEMENTED;
+    UNREACHABLE(ctl->mode);
     break;
   }
   gtk_widget_queue_draw(ctl->drawing_area);

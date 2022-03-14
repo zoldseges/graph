@@ -175,81 +175,72 @@ void print_event(Ctl *ctl, char *fname, int linum, const char *func)
 
 void print_hovered(Ctl *ctl, char *fname, int linum, const char *func)
 {
-  Marked *curr = ctl->hovered;
-
   printf("%s:", fname);
   printf("%d:", linum);
   printf("%d: ", 0);
   printf("`%s`:\n", func);
   printf("print_hovered called\n");
 
-  while(curr) {
-    switch (marked_type(curr)) {
-    case NONE:
-      printf("NONE");
-      break;
-    case NODE:
-      printf("%6s%6s  ", "TYPE: ", "NODE");
-      printf("ID: %3d   ", curr->elem[0]->id);
-      printf("x: %.2f ", curr->elem[0]->p.x);
-      printf("y: %.2f ", curr->elem[0]->p.y);
-      break;
-    case EDGE:
-      printf("%6s%6s  ", "TYPE: ", "EDGE");
-      printf("%6s%3d /", "IDS: ", curr->elem[0]->id);
-      printf("x: %.2f ", curr->elem[0]->p.x);
-      printf("y: %.2f\n", curr->elem[0]->p.y);
-      printf("%6s%3d \\", " ", curr->elem[1]->id);
-      printf("x: %.2f ", curr->elem[1]->p.x);
-      printf("y: %.2f\n", curr->elem[1]->p.y);
-      break;
-    default:
-      UNREACHABLE(marked_type(curr));
-      break;
-    }
-    printf("\n");
-    curr = curr->next;
+  switch (marked_type(ctl->hovered)) {
+  case NONE:
+    printf("NONE");
+    break;
+  case NODE:
+    printf("%6s%6s  ", "TYPE: ", "NODE");
+    printf("ID: %3d   ", ctl->hovered->elem[0]->id);
+    printf("x: %.2f ", ctl->hovered->elem[0]->p.x);
+    printf("y: %.2f ", ctl->hovered->elem[0]->p.y);
+    break;
+  case EDGE:
+    printf("%6s%6s  ", "TYPE: ", "EDGE");
+    printf("%6s%3d /", "IDS: ", ctl->hovered->elem[0]->id);
+    printf("x: %.2f ", ctl->hovered->elem[0]->p.x);
+    printf("y: %.2f\n", ctl->hovered->elem[0]->p.y);
+    printf("%6s%3d \\", " ", ctl->hovered->elem[1]->id);
+    printf("x: %.2f ", ctl->hovered->elem[1]->p.x);
+    printf("y: %.2f\n", ctl->hovered->elem[1]->p.y);
+    break;
+  default:
+    UNREACHABLE(marked_type(ctl->hovered));
+    break;
   }
+  printf("\n");
   printf("-----------------------------\n");
 }
 
 void print_selected(Ctl *ctl, char *fname, int linum, const char *func)
 {
-  Marked *curr = ctl->selected;
-
   printf("%s:", fname);
   printf("%d:", linum);
   printf("%d: ", 0);
   printf("`%s`:\n", func);
   printf("print_selected called\n");
 
-  while(curr) {
-    switch (marked_type(curr)) {
-    case NONE:
-      printf("NONE");
-      break;
-    case NODE:
-      printf("%6s%6s  ", "TYPE: ", "NODE");
-      printf("ID: %3d   ", curr->elem[0]->id);
-      printf("x: %.2f ", curr->elem[0]->p.x);
-      printf("x: %.2f ", curr->elem[0]->p.y);
-      break;
-    case EDGE:
-      printf("%6s%6s  ", "TYPE: ", "EDGE");
-      printf("%6s%3d /", "IDS: ", curr->elem[0]->id);
-      printf("x: %.2f ", curr->elem[0]->p.x);
-      printf("y: %.2f\n", curr->elem[0]->p.y);
-      printf("%6s%3d \\", " ", curr->elem[1]->id);
-      printf("x: %.2f ", curr->elem[1]->p.x);
-      printf("y: %.2f\n", curr->elem[1]->p.y);
-      break;
-    default:
-      UNREACHABLE(marked_type(curr));
-      break;
-    }
-    printf("\n");
-    curr = curr->next;
+
+  switch (marked_type(ctl->selected)) {
+  case NONE:
+    printf("NONE");
+    break;
+  case NODE:
+    printf("%6s%6s  ", "TYPE: ", "NODE");
+    printf("ID: %3d   ", ctl->selected->elem[0]->id);
+    printf("x: %.2f ", ctl->selected->elem[0]->p.x);
+    printf("x: %.2f ", ctl->selected->elem[0]->p.y);
+    break;
+  case EDGE:
+    printf("%6s%6s  ", "TYPE: ", "EDGE");
+    printf("%6s%3d /", "IDS: ", ctl->selected->elem[0]->id);
+    printf("x: %.2f ", ctl->selected->elem[0]->p.x);
+    printf("y: %.2f\n", ctl->selected->elem[0]->p.y);
+    printf("%6s%3d \\", " ", ctl->selected->elem[1]->id);
+    printf("x: %.2f ", ctl->selected->elem[1]->p.x);
+    printf("y: %.2f\n", ctl->selected->elem[1]->p.y);
+    break;
+  default:
+    UNREACHABLE(marked_type(ctl->selected));
+    break;
   }
+  printf("\n");
   printf("-----------------------------\n");
 }
 

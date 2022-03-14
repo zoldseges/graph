@@ -61,7 +61,6 @@ struct Marked {
    * marked[0] & marked[1] if edge
    */
   Node *elem[2];
-  Marked *next;
 };
 
 enum EVENT {

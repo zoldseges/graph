@@ -23,10 +23,10 @@ static void draw_node(Node *node, gpointer data)
 }
 
 void draw_cb(UNUSED	GtkDrawingArea	*dawing_area,
-	     		cairo_t		*cr,
+	     cairo_t		*cr,
 	     UNUSED	int		 width,
 	     UNUSED	int		 height,
-	     		gpointer	 ctl_data)
+	     gpointer	 ctl_data)
 {
   Ctl *ctl = (Ctl*)ctl_data;
   Graph *graph = ctl->graph;
@@ -51,15 +51,28 @@ void draw_cb(UNUSED	GtkDrawingArea	*dawing_area,
 
   /* mark selected node */
   cairo_save(cr);
-  cairo_set_source_rgb(cr, 1, 0, 0);
+  /* selected red - edge start purple */
+  if((ctl->mode == END_EDGE) ||
+     (ctl->mode == START_EDGE)) { 
+    cairo_set_source_rgb(cr,
+			 0x74 / 255.0,
+			 0x1e / 255.0,
+			 0x85 / 255.0);
+  } else {
+    cairo_set_source_rgb(cr, 1, 0, 0);
+  }
   marked_call(mark_node, ctl->selected, NODE, (gpointer) cr);
   cairo_restore(cr);
+
+  /* draw edges */
+  
+  /* update curr edge */
 }
 
 // TODO ratinalize this function (it was copy-paste)
 void resize_cb(       GtkWidget *widget,
-	       UNUSED int	 width,
-	       UNUSED int	 height,
+		      UNUSED int	 width,
+		      UNUSED int	 height,
 	              gpointer	 ctl_data)
 {
   Ctl *ctl = (Ctl*)ctl_data;

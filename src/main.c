@@ -85,7 +85,7 @@ static void activate(GtkApplication *app, gpointer ctl_data)
   drawing_area = gtk_drawing_area_new();
   ctl->drawing_area = drawing_area;
   /* set a minimum size */
-  gtk_widget_set_size_request(drawing_area, 100, 100);
+  gtk_widget_set_size_request(drawing_area, 800, 600);
 
   gtk_frame_set_child(GTK_FRAME(frame), drawing_area);
 
