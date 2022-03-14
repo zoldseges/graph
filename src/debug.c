@@ -11,7 +11,8 @@ void null_error(void *p, char *fname, int linum, const char *func)
     fprintf(stderr, "%s:", fname);
     fprintf(stderr, "%d:", linum);
     fprintf(stderr, "%d: ", 0);
-    fprintf(stderr, "NULL exception in `%s`\n", func);
+    fprintf(stderr, "`%s`:\n", func);
+    fprintf(stderr, "NULL exception\n");
     exit(1);
   }
 }
@@ -22,7 +23,8 @@ void zero_error(int num, char *fname, int linum, const char *func)
     fprintf(stderr, "%s:", fname);
     fprintf(stderr, "%d:", linum);
     fprintf(stderr, "%d: ", 0);
-    fprintf(stderr, "0 exception in `%s`\n", func);
+    fprintf(stderr,"`%s`:\n", func);
+    fprintf(stderr, "0 exception\n");
     exit(1);
   }
 }
@@ -33,7 +35,8 @@ void negint_error(int num, char *fname, int linum, const char *func)
     fprintf(stderr, "%s:", fname);
     fprintf(stderr, "%d:", linum);
     fprintf(stderr, "%d: ", 0);
-    fprintf(stderr, "NEG exception in `%s`\n", func);
+    fprintf(stderr,"`%s`:\n", func);
+    fprintf(stderr, "NEG exception\n");
     exit(1);
   }
 }
@@ -43,7 +46,8 @@ void unreachable_error(int n, char *fname, int linum, const char *func)
   fprintf(stderr, "%s:", fname);
   fprintf(stderr, "%d:", linum);
   fprintf(stderr, "%d: ", 0);
-  fprintf(stderr, "UNREACHABLE inf `%s` case %d\n", func, n);
+  fprintf(stderr,"`%s`:\n", func);
+  fprintf(stderr, "UNREACHABLE case \"%d\"\n", n);
   exit(1);
 }
 
@@ -54,11 +58,11 @@ void print_node(Node *n, UNUSED gpointer d)
 
 void print_graph(Graph *g, char *fname, int linum, const char *func)
 {
-  printf("print_graph called on ");
   printf("%s:", fname);
   printf("%d:", linum);
-  printf("%d: \n", 0);
-  printf("in `%s`\n", func);
+  printf("%d: ", 0);
+  printf("`%s`:\n", func);
+  printf("print graph called\n");
   printf("Graph:\n");
   nodes_call(print_node, g, 0);
   printf("-----------------------------\n");
@@ -66,11 +70,11 @@ void print_graph(Graph *g, char *fname, int linum, const char *func)
 
 void print_pos(Point p, char *fname, int linum, const char *func)
 {
-  printf("print_pos called on ");
   printf("%s:", fname);
   printf("%d:", linum);
-  printf("%d: \n", 0);
-  printf("in `%s`\n", func);
+  printf("%d: ", 0);
+  printf("`%s`:\n", func);
+  printf("print pos called\n");
   printf("mouse pos: x: %f y: %f\n", p.x, p.y);
   printf("-----------------------------\n");
 }
@@ -78,11 +82,11 @@ void print_pos(Point p, char *fname, int linum, const char *func)
 
 void print_mode(Ctl *ctl, char *fname, int linum, const char *func)
 {
-  printf("print_mode called on ");
   printf("%s:", fname);
   printf("%d:", linum);
-  printf("%d: \n", 0);
-  printf("in `%s`\n", func);
+  printf("%d: ", 0);
+  printf("`%s`:\n", func);
+  printf("print_mode called\n");
   printf("MODE: ");
   switch (ctl->mode) {
   case ADD_NODE:
@@ -112,11 +116,11 @@ void print_mode(Ctl *ctl, char *fname, int linum, const char *func)
 }
 void print_event(Ctl *ctl, char *fname, int linum, const char *func)
 {
-  printf("print_mode called on ");
   printf("%s:", fname);
   printf("%d:", linum);
-  printf("%d: \n", 0);
-  printf("in `%s`\n", func);
+  printf("%d: ", 0);
+  printf("`%s`:\n", func);
+  printf("print_mode called\n");
   printf("EVENT: ");
   switch (ctl->event) {
   case MOTION:
@@ -173,11 +177,11 @@ void print_hovered(Ctl *ctl, char *fname, int linum, const char *func)
 {
   Marked *curr = ctl->hovered;
 
-  printf("print_hovered called on ");
   printf("%s:", fname);
   printf("%d:", linum);
-  printf("%d: \n", 0);
-  printf("in `%s`\n", func);
+  printf("%d: ", 0);
+  printf("`%s`:\n", func);
+  printf("print_hovered called\n");
 
   while(curr) {
     switch (marked_type(curr)) {
@@ -213,11 +217,11 @@ void print_selected(Ctl *ctl, char *fname, int linum, const char *func)
 {
   Marked *curr = ctl->selected;
 
-  printf("print_selected called on ");
   printf("%s:", fname);
   printf("%d:", linum);
-  printf("%d: \n", 0);
-  printf("in `%s`\n", func);
+  printf("%d: ", 0);
+  printf("`%s`:\n", func);
+  printf("print_selected called\n");
 
   while(curr) {
     switch (marked_type(curr)) {
@@ -251,11 +255,11 @@ void print_selected(Ctl *ctl, char *fname, int linum, const char *func)
 
 void print_matrix(Matrix m, char *fname, int linum, const char *func)
 {
-  printf("print_matrix called on ");
   printf("%s:", fname);
   printf("%d:", linum);
-  printf("%d: \n", 0);
-  printf("in `%s`\n", func);
+  printf("%d: ", 0);
+  printf("`%s`:\n", func);
+  printf("print_matrix called\n");
   printf("Matrix:\n");
   printf("+");
   for(int i = 0; i < m.row_sz; i++) {
@@ -280,4 +284,15 @@ void print_matrix(Matrix m, char *fname, int linum, const char *func)
   }
   printf("+");
   printf("\n");
+}
+
+void cls(char *fname, int linum, const char *func)
+{
+  printf("\033[2J\033[H");
+  printf("%s:", fname);
+  printf("%d:", linum);
+  printf("%d: ", 0);
+  printf("`%s`:\n", func);
+  printf("clear screen called\n");
+  printf("-----------------------------\n");
 }

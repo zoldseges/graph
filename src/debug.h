@@ -17,6 +17,9 @@ void print_hovered(Ctl *ctl, char *fname, int linum, const char *func);
 void print_selected(Ctl *ctl, char *fname, int linum, const char *func);
 void print_matrix(Matrix m, char *fname, int linum, const char *func);
 
+/* clear screen */
+void cls(char *fname, int linum, const char *func);
+
 /* if flag -DDEBUG on */
 #ifdef DEBUG
   #define UNUSED __attribute__((unused))
@@ -24,7 +27,7 @@ void print_matrix(Matrix m, char *fname, int linum, const char *func);
   #define DEBUG_NULL(p) null_error(p, __FILE__, __LINE__, __func__)
   #define DEBUG_ZERO(n) zero_error(n, __FILE__, __LINE__, __func__)
   #define DEBUG_NEGINT(n) negint_error(n, __FILE__, __LINE__, __func__)
-  #define UNREACHABLE(c) unreachable_error(c, __FILE__, __LINE__, __func__)
+  #define UNREACHABLE(case) unreachable_error(case, __FILE__, __LINE__, __func__)
 #else
   #define UNUSED
   #define UNIMPLEMENTED
@@ -41,5 +44,7 @@ void print_matrix(Matrix m, char *fname, int linum, const char *func);
 #define PRINT_MODE(c) print_mode(c, __FILE__, __LINE__, __func__)
 #define PRINT_EVENT(c) print_event(c, __FILE__, __LINE__, __func__)
 #define PRINT_MATRIX(m) print_matrix(m, __FILE__, __LINE__, __func__)
+
+#define CLS() cls(__FILE__, __LINE__, __func__)
 
 #endif /* ERROR_H__ */

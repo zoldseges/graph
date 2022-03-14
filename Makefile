@@ -5,6 +5,8 @@ CFLAGS_BASE	:= -pedantic-errors -Wall -Wextra
 
 SRCS		:= $(wildcard src/*.c)
 HEADERS		:= $(wildcard src/*.h)
+#headers w/o implementation
+UNIMP_HEADERS	:= src/types.h
 OBJS		:= $(patsubst src/%.c,build/%.o,$(SRCS))
 PKGS		:= gtk4
 
@@ -21,7 +23,7 @@ debug: $(OBJS)
 build/main.o: src/main.c $(HEADERS)
 	$(CC) -o $@ -c $< $(D_CFLAGS) $(D_LIBS) $(DEBUG_FLAGS)
 
-build/%.o: src/%.c src/%.h
+build/%.o: src/%.c src/%.h $(UNIMP_HEADERS)
 	$(CC) -o $@ -c $< $(D_CFLAGS) $(D_LIBS) $(DEBUG_FLAGS)
 
 release: $(SRCS) $(HEADERS)
