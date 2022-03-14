@@ -52,3 +52,11 @@ CONTROLLER ------> VIEW
   |                                                                                                         |
   +---------------------------------------------------------------------------------------------------------+
 #+end_src
+
+
+* actions
+** draw edge
+   first click -> select
+   second click -> start edge
+   if second click == thrid click && -> stopd edge drawing and unselect
+   

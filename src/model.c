@@ -83,3 +83,7 @@ void move_node(UNUSED Graph *graph,
   UNIMPLEMENTED;
 }
 
+void add_edge(Graph *graph, Node *from, Node *to)
+{
+  set_matrix(graph->sm, from->id, to->id, 0);
+}

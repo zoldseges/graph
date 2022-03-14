@@ -60,7 +60,6 @@ static void click_handler(	 GtkGestureClick	*gesture,
     break;
   }
   ctl_handler(ctl);
-  PRINT_MATRIX(ctl->graph->sm);
 }
  
 			  

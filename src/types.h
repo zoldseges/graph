@@ -84,7 +84,7 @@ enum EVENT {
 enum MODE {
   ADD_NODE,
   MOVE_NODE,
-  BEGIN_EDGE,
+  START_EDGE,
   END_EDGE,
   SELECT,
   DELETE,
@@ -92,11 +92,11 @@ enum MODE {
 
 struct Ctl {
   /* control */
-  enum MODE mode;
   Marked *hovered;
   Marked *selected;
   Point pos;
 
+  enum MODE mode;
   enum EVENT event;
 
   /* model */

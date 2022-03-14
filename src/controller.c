@@ -80,6 +80,7 @@ Node *nodes_filter_one(int (*f)(Node *n, gpointer d),
   return min_node;
 }
 
+// TODO doesn't walk the list of marked elems
 enum MARKED marked_type(Marked *marked)
 {
   enum MARKED ret = NONE;
@@ -188,6 +189,8 @@ void ctl_init(Ctl *ctl)
 // TODO merge ctl states and events
 void ctl_handler(Ctl *ctl)
 {
+  PRINT_MODE(ctl);
+  PRINT_EVENT(ctl);
   switch(ctl->event) {
   case MOTION:
     switch(ctl->mode) {
@@ -207,8 +210,15 @@ void ctl_handler(Ctl *ctl)
     /* MOTION END */
   case L_CLICK:
     /* set mode */
-    if(marked_type(ctl->hovered) == NONE) {
+    if((marked_type(ctl->hovered) == NONE) &&
+      (marked_type(ctl->selected) == NONE)) {
       ctl->mode = ADD_NODE;
+    }
+
+    if((ctl->selected->elem[0] == ctl->hovered->elem[0]) &&
+       (ctl->selected->elem[1] == ctl->hovered->elem[1]) &&
+       (ctl->mode == SELECT )) {
+      ctl->mode = START_EDGE;
     }
 
     /* act */

@@ -76,6 +76,99 @@ void print_pos(Point p, char *fname, int linum, const char *func)
 }
 
 
+void print_mode(Ctl *ctl, char *fname, int linum, const char *func)
+{
+  printf("print_mode called on ");
+  printf("%s:", fname);
+  printf("%d:", linum);
+  printf("%d: \n", 0);
+  printf("in `%s`\n", func);
+  printf("MODE: ");
+  switch (ctl->mode) {
+  case ADD_NODE:
+    printf("ADD_NODE");
+    break;
+  case MOVE_NODE:
+    printf("MOVE_NODE");
+    break;
+  case START_EDGE:
+    printf("START_EDGE");
+    break;
+  case END_EDGE:
+    printf("END_EDGE");
+    break;
+  case SELECT:
+    printf("SELECT");
+    break;
+  case DELETE:
+    printf("DELETE");
+    break;
+  default:
+    UNREACHABLE(ctl->mode);
+    break;
+  }
+  printf("\n");
+  printf("-----------------------------\n");
+}
+void print_event(Ctl *ctl, char *fname, int linum, const char *func)
+{
+  printf("print_mode called on ");
+  printf("%s:", fname);
+  printf("%d:", linum);
+  printf("%d: \n", 0);
+  printf("in `%s`\n", func);
+  printf("EVENT: ");
+  switch (ctl->event) {
+  case MOTION:
+    printf("MOTION");
+    break;
+  case L_CLICK:
+    printf("L_CLICK");
+    break;
+  case M_CLICK:
+    printf("M_CLICK");
+    break;
+  case R_CLICK:
+    printf("R_CLICK");
+    break;
+  case SCROLL_UP:
+    printf("SCROLL_UP");
+    break;
+  case SCROLL_DOWN:
+    printf("SCROLL_DOWN");
+    break;
+  case L_DRAG_BEGIN:
+    printf("L_DRAG_BEGIN");
+    break;
+  case R_DRAG_BEGIN:
+    printf("R_DRAG_BEGIN");
+    break;
+  case L_DRAG_UPDATE:
+    printf("L_DRAG_UPDATE");
+    break;
+  case R_DRAG_UPDATE:
+    printf("R_DRAG_UPDATE");
+    break;
+  case L_DRAG_END:
+    printf("L_DRAG_END");
+    break;
+  case R_DRAG_END:
+    printf("R_DRAG_END");
+    break;
+  case DESTROY:
+    printf("DESTROY");
+    break;
+  case RESIZE:
+    printf("RESIZE");
+    break;
+  default:
+    UNREACHABLE(ctl->event);
+    break;
+  }
+  printf("\n");
+  printf("-----------------------------\n");
+}
+
 void print_hovered(Ctl *ctl, char *fname, int linum, const char *func)
 {
   Marked *curr = ctl->hovered;
