@@ -2,6 +2,7 @@
 #ifndef DEBUG_H__
 #define DEBUG_H__
 
+#include <assert.h>
 #include "types.h"
 
 void null_error(void *p, char *fname, int linum, const char *func);

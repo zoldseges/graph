@@ -1,8 +1,7 @@
-#include <limits.h>
 #include "debug.h"
 #include "types.h"
-#include "model.h"
 #include "graphmath.h"
+#include "model.h"
 
 static void walk_nodes(Node **curr, const Graph *graph)
 {
@@ -198,12 +197,12 @@ void ctl_init(Ctl *ctl)
 // TODO merge ctl states and events
 void ctl_handler(Ctl *ctl)
 {
-  CLS();
-  PRINT_HOVERED(ctl);
-  PRINT_SELECTED(ctl);
-  PRINT_MODE(ctl);
-  PRINT_EVENT(ctl);
-  PRINT_MATRIX(ctl->graph->sm);
+  /* CLS(); */
+  /* PRINT_HOVERED(ctl); */
+  /* PRINT_SELECTED(ctl); */
+  /* PRINT_MODE(ctl); */
+  /* PRINT_EVENT(ctl); */
+  /* PRINT_MATRIX(ctl->graph->sm); */
   switch(ctl->event) {
   case MOTION:
     switch(ctl->mode) {

@@ -1,8 +1,5 @@
-#include <gtk/gtk.h>
-
 #include "debug.h"
 #include "types.h"
-#include "model.h"
 #include "controller.h"
 
 #define NODE_R 5

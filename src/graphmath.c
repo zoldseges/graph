@@ -1,6 +1,3 @@
-#include <math.h>
-#include <limits.h>
-#include "debug.h"
 #include "types.h"
 
 int rdist(Point p1, Point p2)

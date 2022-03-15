@@ -1,9 +1,6 @@
 #ifndef CONTROLLER_H__
 #define CONTROLLER_H__
 
-#include "types.h"
-#include "view.h"
-
 void ctl_init(Ctl *ctl);
 void ctl_handler(Ctl *ctl);
 void free_ctl(Ctl *ctl);

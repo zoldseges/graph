@@ -28,7 +28,7 @@ build/%.d: src/%.c
 	gcc -MM -MT $(patsubst build/%.d,build/%.o,$@) $< > $@
 
 release:
-	$(CC) $(filter %.c,$^) -o graph $(CFLAGS) $(LIBS) $(RELEASE_FLAGS) 
+	$(CC) $(wildcard src/*.c) -o graph $(CFLAGS) $(LIBS) $(RELEASE_FLAGS) 
 
 test: $(wildcard test/src/*)
 	$(CC) test/src/main.c -o test/$@ $(D_CFLAGS) $(D_LIBS) $(DEBUG_FLAGS) 

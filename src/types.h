@@ -2,7 +2,6 @@
 #define TYPES_H__
 
 #include <gtk/gtk.h>
-#include <assert.h>
 
 /* Model
  */

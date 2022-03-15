@@ -1,8 +1,5 @@
 #include <stdio.h>
-#include <limits.h>
-
 #include "debug.h"
-#include "model.h"
 #include "controller.h"
 
 void null_error(void *p, char *fname, int linum, const char *func)

@@ -1,8 +1,6 @@
-#include <gtk/gtk.h>
-#include "types.h"
+#include "debug.h"
 #include "controller.h"
 #include "view.h"
-#include "debug.h"
 
 static void motion_handler(UNUSED GtkEventControllerMotion	*self,
 			          gdouble			 x,

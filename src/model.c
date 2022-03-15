@@ -1,5 +1,5 @@
 #include "debug.h"
-#include "graphmath.h"
+#include "types.h"
 
 void set_matrix(Matrix m,
 		int row,
