@@ -77,7 +77,7 @@ void draw_cb(UNUSED	GtkDrawingArea	*dawing_area,
   edges_call(draw_edge, ctl->graph, cr);
   cairo_restore(cr);
   /* update curr edge */
-  if(ctl->selected->elem[0]) {
+  if(ctl->mode == END_EDGE){
     cairo_save(cr);
     cairo_set_source_rgb(cr, 1, 1, 1);
     Node curr_pos = {0};

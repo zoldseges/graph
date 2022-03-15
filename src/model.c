@@ -9,6 +9,11 @@ void set_matrix(Matrix m,
   *(m.pm + (m.row_sz * row) + col) = weight;
 }
 
+int get_weight(Matrix m, int row, int col)
+{
+  return *(m.pm + (m.row_sz * row) + col);
+}
+
 static void grow_matrix(Matrix *old)
 {
   Matrix new = {0};

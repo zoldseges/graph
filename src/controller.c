@@ -33,7 +33,7 @@ void edges_call(void (*f)(Node *from, Node *to, int weight, gpointer d),
 {
   for(int from_i = 0; from_i < graph->node_cnt; from_i++) {
     for(int to_i = 0; to_i < graph->node_cnt; to_i++) {
-      int weight = *(graph->sm.pm + (graph->node_cnt * from_i) + to_i);
+      int weight = get_weight(graph->sm, from_i, to_i);
       if( weight != INT_MAX ){
 	Node *from = get_node_by_id(graph, from_i); 
 	Node *to = get_node_by_id(graph, to_i);
@@ -203,81 +203,81 @@ void ctl_handler(Ctl *ctl)
   /* PRINT_MODE(ctl); */
   /* PRINT_EVENT(ctl); */
   /* PRINT_MATRIX(ctl->graph->sm); */
-  switch(ctl->event) {
-  case MOTION:
-    switch(ctl->mode) {
 
-    case ADD_NODE:
-    case SELECT:
-      set_hovered(ctl, ctl->pos);
-      ctl->mode = SELECT;
-      break;
-      
-    case START_EDGE:
-    case END_EDGE:
-      set_hovered(ctl, ctl->pos);
-      ctl->mode = END_EDGE;
-      break;
+  set_hovered(ctl, ctl->pos);
+  switch(ctl->mode) {
+  case SELECT:
+    switch (ctl->event) {
+    case L_CLICK:
+      {
+	/* add node */
+	if(marked_type(ctl->hovered) == NO_MARKED) {
+	  add_node(ctl->graph, ctl->pos);
+	  /* start edge */
+	} else if ((ctl->hovered->elem[0] == ctl->selected->elem[0]) &&
+		   (ctl->hovered->elem[1] == ctl->selected->elem[1]) &&
+		   (marked_type(ctl->hovered) == NODE)) {
+	  set_marked(ctl->selected,
+		     ctl->hovered->elem[0],
+		     ctl->hovered->elem[1]);
+	  ctl->mode = START_EDGE;
+	  ctl_handler(ctl);
+	  /* select */
+	} else {
+	  set_marked(ctl->selected,
+		     ctl->hovered->elem[0],
+		     ctl->hovered->elem[1]);
+	}
+      } break;
+      /* end L_CLICK case */
     default:
-      UNREACHABLE(ctl->mode);
-      break;
+      {
+      }  break;
     }
+    /* end SELECT case */
+  case MOVE_NODE:
     break;
-    /* MOTION END */
-  case L_CLICK:
-    /* set mode */
-    if((marked_type(ctl->hovered) == NONE) &&
-      (marked_type(ctl->selected) == NONE)) {
-      ctl->mode = ADD_NODE;
-    }
-
-    if((ctl->selected->elem[0] == ctl->hovered->elem[0]) &&
-       (ctl->selected->elem[1] == ctl->hovered->elem[1]) &&
-       (ctl->mode == SELECT )) {
-      ctl->mode = START_EDGE;
-    }
-
-    /* act */
-    switch(ctl->mode) {
-      
-    case ADD_NODE:
-      add_node(ctl->graph, ctl->pos);
-      set_marked(ctl->selected, NULL, NULL);
-      set_hovered(ctl, ctl->pos);
-      break;
-      
-    case SELECT:
-      set_marked(ctl->selected,
-		 ctl->hovered->elem[0],
-		 ctl->hovered->elem[1]);
-      break;
-      
-    case START_EDGE:
-      set_marked(ctl->selected,
-		 ctl->hovered->elem[0],
-		 ctl->hovered->elem[1]);
-      set_marked(ctl->hovered, NULL, NULL);
-      break;
-    case END_EDGE:
-      set_marked(ctl->selected,
-		 ctl->selected->elem[0],
-		 ctl->hovered->elem[0]);
-      add_edge(ctl->graph,
-	       ctl->selected->elem[0],
-	       ctl->hovered->elem[0]);
-      set_marked(ctl->selected, NULL, NULL);
-      ctl->mode = SELECT;
-      break;
+    
+  case START_EDGE:
+    switch (ctl->event) {
+    case L_CLICK:
+      {
+	ctl->mode = END_EDGE;
+	ctl_handler(ctl);
+      } break;
+      /* end L_CLICK */
     default:
-      UNREACHABLE(ctl->mode);
-      break;
+      {
+      } break;
+    } break;
+    /* end START_EDGE case */
+  case END_EDGE:
+    switch(ctl->event) {
+    case L_CLICK:
+      {
+	/* end edge */
+	if((marked_type(ctl->hovered) == NODE) &&
+	   (ctl->hovered->elem[0] != ctl->selected->elem[0]) &&
+	   (ctl->hovered->elem[1] == NULL) &&
+	   (ctl->selected->elem[1] == NULL)) {
+	  add_edge(ctl->graph,
+		   ctl->selected->elem[0],
+		   ctl->hovered->elem[0]);
+	  set_marked(ctl->selected, NULL, NULL);
+	  ctl->mode = SELECT;
+	}
+      } break;
+      /* end L_CLICK */
+    default:
+      {
+      } break;
     }
-    break;
-    /* L_CLICK END */
-  default:
-    UNREACHABLE(ctl->mode);
-    break;
+    /* end END_EDGE case */
+  case DELETE:
+    {
+    } break;
   }
+  /* end MODE (outer) switch */
   gtk_widget_queue_draw(ctl->drawing_area);
 }
 

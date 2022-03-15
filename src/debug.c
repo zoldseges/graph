@@ -174,10 +174,10 @@ void print_hovered(Ctl *ctl, char *fname, int linum, const char *func)
   printf("%d: ", 0);
   printf("`%s`:\n", func);
   printf("print_hovered called\n");
-
+  printf("HOVERED:\n");
   switch (marked_type(ctl->hovered)) {
-  case NONE:
-    printf("NONE");
+  case NO_MARKED:
+    printf("NO HOVERED");
     break;
   case NODE:
     printf("%6s%6s  ", "TYPE: ", "NODE");
@@ -209,11 +209,10 @@ void print_selected(Ctl *ctl, char *fname, int linum, const char *func)
   printf("%d: ", 0);
   printf("`%s`:\n", func);
   printf("print_selected called\n");
-
-
+  printf("SELECTED:\n");
   switch (marked_type(ctl->selected)) {
-  case NONE:
-    printf("NONE");
+  case NO_MARKED:
+    printf("NO SELECTED");
     break;
   case NODE:
     printf("%6s%6s  ", "TYPE: ", "NODE");
