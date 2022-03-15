@@ -213,6 +213,7 @@ void ctl_handler(Ctl *ctl)
 	/* add node */
 	if(marked_type(ctl->hovered) == NO_MARKED) {
 	  add_node(ctl->graph, ctl->pos);
+	  set_marked(ctl->selected, NULL, NULL);
 	  /* start edge */
 	} else if ((ctl->hovered->elem[0] == ctl->selected->elem[0]) &&
 		   (ctl->hovered->elem[1] == ctl->selected->elem[1]) &&
