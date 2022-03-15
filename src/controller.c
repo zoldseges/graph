@@ -100,7 +100,7 @@ Node *nodes_filter_one(int (*f)(Node *n, gpointer d),
 // TODO doesn't walk the list of marked elems
 enum MARKED marked_type(Marked *marked)
 {
-  enum MARKED ret = NONE;
+  enum MARKED ret = NO_MARKED;
 
   if(marked->elem[0]) {
     ret = NODE;

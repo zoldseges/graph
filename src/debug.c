@@ -86,9 +86,6 @@ void print_mode(Ctl *ctl, char *fname, int linum, const char *func)
   printf("print_mode called\n");
   printf("MODE: ");
   switch (ctl->mode) {
-  case ADD_NODE:
-    printf("ADD_NODE");
-    break;
   case MOVE_NODE:
     printf("MOVE_NODE");
     break;

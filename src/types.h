@@ -47,7 +47,7 @@ struct Graph {
 };
 
 enum MARKED {
-  NONE,
+  NO_MARKED,
   NODE,
   EDGE,
   ANY,
@@ -79,11 +79,10 @@ enum EVENT {
 };
 
 enum MODE {
-  ADD_NODE,
+  SELECT,
   MOVE_NODE,
   START_EDGE,
   END_EDGE,
-  SELECT,
   DELETE,
 };
 
