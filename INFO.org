@@ -1,5 +1,7 @@
 * TODOS
-** merge ctl states and events
+  - [-] Makefile
+    - [X] automatic header prequisites
+    - [ ] autogenerate compile_commands.json
    
 * MVC
 ** MVC:
