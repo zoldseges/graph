@@ -226,13 +226,15 @@ void ctl_handler(Ctl *ctl)
   enum ACTION action = ACT_NONE;
 
   set_hovered(ctl, ctl->pos);
-  if(ctl->event == MOTION) {
-    gtk_widget_queue_draw(ctl->drawing_area);
-  }
+
   switch(ctl->mode) {
   case SELECT:
     switch(ctl->event)
       {
+      case MOTION:
+	gtk_widget_queue_draw(ctl->drawing_area);
+	break;
+	
       case L_CLICK:
 	{
 	  if(marked_type(ctl->hovered) == NO_MARKED) {
@@ -245,39 +247,36 @@ void ctl_handler(Ctl *ctl)
 	  }
 	} break;
 
-      default:
-	break;
-
       } break;
 
   case START_EDGE:
     switch (ctl->event)
       {
+      case MOTION:
+	gtk_widget_queue_draw(ctl->drawing_area);
+	break;
+
       case L_CLICK:
 	action = ACT_DRAW_EDGE;
 	break;
-
-      default:
-	break;
-
       } break;
 
   case END_EDGE: // ?
     switch(ctl->event)
       {
-      case L_CLICK:
-	if((marked_type(ctl->hovered) == NODE) &&
-	   !(marked_equals(ctl->hovered, ctl->selected))) {
-	  action = ACT_END_EDGE;
-	}
-
-      default:
+      case MOTION:
+	gtk_widget_queue_draw(ctl->drawing_area);
 	break;
 
-      } break;
+      case L_CLICK:
+	if(marked_type(ctl->hovered) == NODE) {
+	  if(marked_equals(ctl->hovered, ctl->selected)) {
 
-  default:
-    break;
+	  } else {
+	    action = ACT_END_EDGE;
+	  }
+	}
+      } break;
   }
   do_action(ctl, action);
   gtk_widget_queue_draw(ctl->drawing_area);

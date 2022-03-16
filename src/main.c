@@ -40,18 +40,18 @@ static void click_handler(	 GtkGestureClick	*gesture,
   case 1:
     ctl->event = L_CLICK;
     break;
-  case 2:
-    ctl->event = M_CLICK;
-    break;
-  case 3:
-    ctl->event = R_CLICK;
-    break;
-  case 4:
-    ctl->event = SCROLL_UP;
-    break;
-  case 5:
-    ctl->event = SCROLL_DOWN;
-    break;
+  /* case 2: */
+  /*   ctl->event = M_CLICK; */
+  /*   break; */
+  /* case 3: */
+  /*   ctl->event = R_CLICK; */
+  /*   break; */
+  /* case 4: */
+  /*   ctl->event = SCROLL_UP; */
+  /*   break; */
+  /* case 5: */
+  /*   ctl->event = SCROLL_DOWN; */
+  /*   break; */
   default:
     fprintf(stderr, "case: %d\n", button);
     UNIMPLEMENTED;

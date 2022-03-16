@@ -64,26 +64,26 @@ struct Marked {
 enum EVENT {
   MOTION,
   L_CLICK,
-  M_CLICK,
-  R_CLICK,
-  SCROLL_UP,
-  SCROLL_DOWN,
-  L_DRAG_BEGIN,
-  R_DRAG_BEGIN,
-  L_DRAG_UPDATE,
-  R_DRAG_UPDATE,
-  L_DRAG_END,
-  R_DRAG_END,
-  DESTROY,
-  RESIZE,
+  /* M_CLICK, */
+  /* R_CLICK, */
+  /* SCROLL_UP, */
+  /* SCROLL_DOWN, */
+  /* L_DRAG_BEGIN, */
+  /* R_DRAG_BEGIN, */
+  /* L_DRAG_UPDATE, */
+  /* R_DRAG_UPDATE, */
+  /* L_DRAG_END, */
+  /* R_DRAG_END, */
+  /* DESTROY, */
+  /* RESIZE, */
 };
 
 enum MODE {
   SELECT,
-  MOVE_NODE,
   START_EDGE,
   END_EDGE,
-  DELETE,
+  /* MOVE_NODE, */
+  /* DELETE, */
 };
 
 struct Ctl {
