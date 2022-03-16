@@ -3,6 +3,16 @@
 #include "graphmath.h"
 #include "model.h"
 
+gboolean marked_equals(Marked *a, Marked *b)
+{
+  gboolean ans = FALSE;
+  if((a->elem[0] == b->elem[0]) &&
+     (a->elem[1] == b->elem[1])) {
+    ans = TRUE;
+  }
+  return ans;
+}
+
 static void walk_nodes(Node **curr, const Graph *graph)
 {
   /* if called with graph */
@@ -215,8 +225,7 @@ void ctl_handler(Ctl *ctl)
 	  add_node(ctl->graph, ctl->pos);
 	  set_marked(ctl->selected, NULL, NULL);
 	  /* start edge */
-	} else if ((ctl->hovered->elem[0] == ctl->selected->elem[0]) &&
-		   (ctl->hovered->elem[1] == ctl->selected->elem[1]) &&
+	} else if ((marked_equals(ctl->hovered, ctl->selected)) &&
 		   (marked_type(ctl->hovered) == NODE)) {
 	  set_marked(ctl->selected,
 		     ctl->hovered->elem[0],
@@ -258,9 +267,7 @@ void ctl_handler(Ctl *ctl)
       {
 	/* end edge */
 	if((marked_type(ctl->hovered) == NODE) &&
-	   (ctl->hovered->elem[0] != ctl->selected->elem[0]) &&
-	   (ctl->hovered->elem[1] == NULL) &&
-	   (ctl->selected->elem[1] == NULL)) {
+	   !(marked_equals(ctl->hovered, ctl->selected))) {
 	  add_edge(ctl->graph,
 		   ctl->selected->elem[0],
 		   ctl->hovered->elem[0]);

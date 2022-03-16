@@ -19,7 +19,11 @@
       - [ ] .xml
   12. [ ] modularity
 
-* Makefile
+* TODO Makefile
    - [-] Makefile
      - [X] automatic header prequisites
      - [ ] autogenerate compile_commands.json
+
+* TODO refactor ctl_handler
+  {Mode {event}} => action
+* TODO inline TODOS
