@@ -24,8 +24,8 @@
      - [X] automatic header prequisites
      - [ ] autogenerate compile_commands.json
 
-* TODO refactor ctl_handler
-  {Mode {event}} => action
 * TODO handle quit
   - [ ] free_ctl
 * TODO inline TODOS
+* DONE refactor ctl_handler
+  {Mode {event}} => action

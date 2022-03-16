@@ -204,7 +204,17 @@ void ctl_init(Ctl *ctl)
   }
 }
 
-// TODO merge ctl states and events
+enum ACTION {
+  ACT_NONE,
+  ACT_ADD_NODE,
+  ACT_SEL_NODE,
+  ACT_START_EDGE,
+  ACT_DRAW_EDGE,
+  ACT_END_EDGE,
+};
+
+static void do_action(Ctl *ctl, enum ACTION action);
+
 void ctl_handler(Ctl *ctl)
 {
   /* CLS(); */
@@ -213,84 +223,106 @@ void ctl_handler(Ctl *ctl)
   /* PRINT_MODE(ctl); */
   /* PRINT_EVENT(ctl); */
   /* PRINT_MATRIX(ctl->graph->sm); */
+  enum ACTION action = ACT_NONE;
 
   set_hovered(ctl, ctl->pos);
+  if(ctl->event == MOTION) {
+    gtk_widget_queue_draw(ctl->drawing_area);
+  }
   switch(ctl->mode) {
   case SELECT:
-    switch (ctl->event) {
-    case L_CLICK:
+    switch(ctl->event)
       {
-	/* add node */
-	if(marked_type(ctl->hovered) == NO_MARKED) {
-	  add_node(ctl->graph, ctl->pos);
-	  set_marked(ctl->selected, NULL, NULL);
-	  /* start edge */
-	} else if ((marked_equals(ctl->hovered, ctl->selected)) &&
-		   (marked_type(ctl->hovered) == NODE)) {
-	  set_marked(ctl->selected,
-		     ctl->hovered->elem[0],
-		     ctl->hovered->elem[1]);
-	  ctl->mode = START_EDGE;
-	  ctl_handler(ctl);
-	  /* select */
-	} else {
-	  set_marked(ctl->selected,
-		     ctl->hovered->elem[0],
-		     ctl->hovered->elem[1]);
-	}
+      case L_CLICK:
+	{
+	  if(marked_type(ctl->hovered) == NO_MARKED) {
+	    action = ACT_ADD_NODE;
+	  } else if ((marked_equals(ctl->hovered, ctl->selected)) &&
+		     (marked_type(ctl->hovered) == NODE)) {
+	    action = ACT_START_EDGE; //?
+	  } else {
+	    action = ACT_SEL_NODE;
+	  }
+	} break;
+
+      default:
+	break;
+
       } break;
-      /* end L_CLICK case */
-    default:
-      {
-      }  break;
-    }
-    /* end SELECT case */
-  case MOVE_NODE:
-    break;
-    
+
   case START_EDGE:
-    switch (ctl->event) {
-    case L_CLICK:
+    switch (ctl->event)
       {
-	ctl->mode = END_EDGE;
-	ctl_handler(ctl);
+      case L_CLICK:
+	action = ACT_DRAW_EDGE;
+	break;
+
+      default:
+	break;
+
       } break;
-      /* end L_CLICK */
-    default:
+
+  case END_EDGE: // ?
+    switch(ctl->event)
       {
-      } break;
-    } break;
-    /* end START_EDGE case */
-  case END_EDGE:
-    switch(ctl->event) {
-    case L_CLICK:
-      {
-	/* end edge */
+      case L_CLICK:
 	if((marked_type(ctl->hovered) == NODE) &&
 	   !(marked_equals(ctl->hovered, ctl->selected))) {
-	  add_edge(ctl->graph,
-		   ctl->selected->elem[0],
-		   ctl->hovered->elem[0]);
-	  set_marked(ctl->selected, NULL, NULL);
-	  ctl->mode = SELECT;
+	  action = ACT_END_EDGE;
 	}
+
+      default:
+	break;
+
       } break;
-      /* end L_CLICK */
-    default:
-      {
-      } break;
-    }
-    /* end END_EDGE case */
-  case DELETE:
-    {
-    } break;
+
+  default:
+    break;
   }
-  /* end MODE (outer) switch */
+  do_action(ctl, action);
   gtk_widget_queue_draw(ctl->drawing_area);
+}
+
+static void do_action(Ctl *ctl, enum ACTION action)
+{
+  switch(action) {
+  case ACT_NONE:
+    break;
+  case ACT_ADD_NODE:
+    add_node(ctl->graph, ctl->pos);
+    set_marked(ctl->selected, NULL, NULL);
+    break;
+
+  case ACT_START_EDGE: //?
+    /* set_marked(ctl->selected, */
+    /* 	       ctl->hovered->elem[0], */
+    /* 	       ctl->hovered->elem[1]); */
+    ctl->mode = START_EDGE;
+    ctl_handler(ctl);
+    break;
+
+  case ACT_SEL_NODE:
+    set_marked(ctl->selected,
+	       ctl->hovered->elem[0],
+	       ctl->hovered->elem[1]);
+    break;
+    
+  case ACT_DRAW_EDGE:
+    ctl->mode = END_EDGE;
+    ctl_handler(ctl);
+    break;
+
+  case ACT_END_EDGE:
+    add_edge(ctl->graph,
+	     ctl->selected->elem[0],
+	     ctl->hovered->elem[0]);
+    set_marked(ctl->selected, NULL, NULL);
+    ctl->mode = SELECT;
+    break;
+  }
 }
 
 void free_ctl(UNUSED Ctl *ctl)
 {
   UNIMPLEMENTED;
 }
-
