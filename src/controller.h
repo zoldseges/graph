@@ -1,11 +1,14 @@
 #ifndef CONTROLLER_H__
 #define CONTROLLER_H__
 
+#include "types.h"
+
 void ctl_init(Ctl *ctl);
 void ctl_handler(Ctl *ctl);
 void free_ctl(Ctl *ctl);
 
 enum MARKED marked_type(Marked *marked);
+gboolean marked_equals(Marked *a, Marked *b);
 
 /* calls `f` on every node in `marked` 
  * which is of type `type`
