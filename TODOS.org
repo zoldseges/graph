@@ -5,8 +5,8 @@
      - [X]  node
      - [ ]  edge
      - [ ] rect select
-  4. [ ] abort action
-     - [ ] draw edge to origin
+  4. [-] abort action
+     - [X] draw edge to origin
      - [ ] press ESC
   5. [ ] delete
      - [ ] delete node

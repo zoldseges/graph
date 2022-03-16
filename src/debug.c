@@ -92,9 +92,6 @@ void print_mode(Ctl *ctl, char *fname, int linum, const char *func)
   case START_EDGE:
     printf("START_EDGE");
     break;
-  case END_EDGE:
-    printf("END_EDGE");
-    break;
   /* case MOVE_NODE: */
   /*   printf("MOVE_NODE"); */
   /*   break; */

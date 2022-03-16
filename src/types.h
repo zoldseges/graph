@@ -81,7 +81,6 @@ enum EVENT {
 enum MODE {
   SELECT,
   START_EDGE,
-  END_EDGE,
   /* MOVE_NODE, */
   /* DELETE, */
 };

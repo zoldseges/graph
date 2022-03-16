@@ -59,7 +59,7 @@ void draw_cb(UNUSED	GtkDrawingArea	*dawing_area,
   edges_call(draw_edge, ctl->graph, cr);
   cairo_restore(cr);
   /* update curr edge */
-  if(ctl->mode == END_EDGE){
+  if(ctl->mode == START_EDGE){
     cairo_save(cr);
     set_hex_color(cr, 0xFFEEEE);
     Node curr_pos = {0};
@@ -85,7 +85,7 @@ void draw_cb(UNUSED	GtkDrawingArea	*dawing_area,
   /* mark selected node */
   cairo_save(cr);
   /* selected red - edge start purple */
-  if(ctl->mode == END_EDGE) {
+  if(ctl->mode == START_EDGE) {
     /* edge origin and hovered */
     if(marked_equals(ctl->selected, ctl->hovered)){
       set_hex_color(cr, 0xff0ff3);

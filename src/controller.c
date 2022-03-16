@@ -205,11 +205,10 @@ void ctl_init(Ctl *ctl)
 }
 
 enum ACTION {
-  ACT_NONE,
+  ACT_ABORT,
   ACT_ADD_NODE,
   ACT_SEL_NODE,
   ACT_START_EDGE,
-  ACT_DRAW_EDGE,
   ACT_END_EDGE,
 };
 
@@ -223,7 +222,7 @@ void ctl_handler(Ctl *ctl)
   /* PRINT_MODE(ctl); */
   /* PRINT_EVENT(ctl); */
   /* PRINT_MATRIX(ctl->graph->sm); */
-  enum ACTION action = ACT_NONE;
+  enum ACTION action = ACT_ABORT;
 
   set_hovered(ctl, ctl->pos);
 
@@ -239,8 +238,8 @@ void ctl_handler(Ctl *ctl)
 	{
 	  if(marked_type(ctl->hovered) == NO_MARKED) {
 	    action = ACT_ADD_NODE;
-	  } else if ((marked_equals(ctl->hovered, ctl->selected)) &&
-		     (marked_type(ctl->hovered) == NODE)) {
+	  } else if ((marked_type(ctl->hovered) == NODE) &&
+		     (marked_equals(ctl->hovered, ctl->selected))) {
 	    action = ACT_START_EDGE;
 	  } else {
 	    action = ACT_SEL_NODE;
@@ -257,33 +256,32 @@ void ctl_handler(Ctl *ctl)
 	break;
 
       case L_CLICK:
-	action = ACT_DRAW_EDGE;
-	break;
-
-      } break;
-
-  case END_EDGE:
-    switch(ctl->event)
-      {
-      case MOTION:
-	gtk_widget_queue_draw(ctl->drawing_area);
-
-      case L_CLICK:
-	if((marked_type(ctl->hovered) == NODE) &&
-	   (!marked_equals(ctl->hovered, ctl->selected))) {
-	  action = ACT_END_EDGE;
-	}
-
+	{
+	  if(marked_type(ctl->hovered) == NODE) {
+	    switch(!marked_equals(ctl->hovered, ctl->selected)) {
+	    case TRUE:
+	      action = ACT_END_EDGE;
+	      break;
+	    case FALSE:
+	      action = ACT_ABORT;
+	      break;
+	    }
+	  }
+	} break;
+	
       } break;
   }
-  if(action != ACT_NONE) do_action(ctl, action);
+  
+  if(ctl->event != MOTION) do_action(ctl, action);
   gtk_widget_queue_draw(ctl->drawing_area);
 }
 
 static void do_action(Ctl *ctl, enum ACTION action)
 {
   switch(action) {
-  case ACT_NONE:
+  case ACT_ABORT:
+    ctl->mode = SELECT;
+    ctl->event = MOTION;
     break;
   case ACT_ADD_NODE:
     add_node(ctl->graph, ctl->pos);
@@ -292,6 +290,7 @@ static void do_action(Ctl *ctl, enum ACTION action)
 
   case ACT_START_EDGE:
     ctl->mode = START_EDGE;
+    ctl->event = MOTION;
     ctl_handler(ctl);
     break;
 
@@ -301,11 +300,6 @@ static void do_action(Ctl *ctl, enum ACTION action)
 	       ctl->hovered->elem[1]);
     break;
     
-  case ACT_DRAW_EDGE:
-    ctl->mode = END_EDGE;
-    ctl_handler(ctl);
-    break;
-
   case ACT_END_EDGE:
     add_edge(ctl->graph,
 	     ctl->selected->elem[0],
@@ -313,7 +307,6 @@ static void do_action(Ctl *ctl, enum ACTION action)
     set_marked(ctl->selected, NULL, NULL);
     ctl->mode = SELECT;
     break;
-    
   }
 }
 
