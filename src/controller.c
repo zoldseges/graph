@@ -239,7 +239,7 @@ void ctl_handler(Ctl *ctl)
 	    action = ACT_ADD_NODE;
 	  } else if ((marked_equals(ctl->hovered, ctl->selected)) &&
 		     (marked_type(ctl->hovered) == NODE)) {
-	    action = ACT_START_EDGE; //?
+	    action = ACT_START_EDGE;
 	  } else {
 	    action = ACT_SEL_NODE;
 	  }
@@ -262,12 +262,12 @@ void ctl_handler(Ctl *ctl)
 
       } break;
 
-  case END_EDGE: // ?
+  case END_EDGE:
     switch(ctl->event)
       {
       case L_CLICK:
 	if((marked_type(ctl->hovered) == NODE) &&
-	   !(marked_equals(ctl->hovered, ctl->selected))) {
+	   (!marked_equals(ctl->hovered, ctl->selected))) {
 	  action = ACT_END_EDGE;
 	}
 
@@ -279,7 +279,7 @@ void ctl_handler(Ctl *ctl)
   default:
     break;
   }
-  do_action(ctl, action);
+  if(action != ACT_NONE) do_action(ctl, action);
   gtk_widget_queue_draw(ctl->drawing_area);
 }
 
@@ -293,10 +293,7 @@ static void do_action(Ctl *ctl, enum ACTION action)
     set_marked(ctl->selected, NULL, NULL);
     break;
 
-  case ACT_START_EDGE: //?
-    /* set_marked(ctl->selected, */
-    /* 	       ctl->hovered->elem[0], */
-    /* 	       ctl->hovered->elem[1]); */
+  case ACT_START_EDGE:
     ctl->mode = START_EDGE;
     ctl_handler(ctl);
     break;
@@ -319,6 +316,7 @@ static void do_action(Ctl *ctl, enum ACTION action)
     set_marked(ctl->selected, NULL, NULL);
     ctl->mode = SELECT;
     break;
+    
   }
 }
 
