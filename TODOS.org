@@ -1,7 +1,4 @@
-# graph
-simple graph editor built using GTK4
-# WIP
-## features
+* Features
   1. [X] add node
   2. [X] add edge
   3. [-] select
@@ -21,3 +18,8 @@ simple graph editor built using GTK4
       - [ ] .dot
       - [ ] .xml
   12. [ ] modularity
+
+* Makefile
+   - [-] Makefile
+     - [X] automatic header prequisites
+     - [ ] autogenerate compile_commands.json
