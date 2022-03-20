@@ -17,6 +17,7 @@ void print_event(Ctl *ctl, char *fname, int linum, const char *func);
 void print_hovered(Ctl *ctl, char *fname, int linum, const char *func);
 void print_selected(Ctl *ctl, char *fname, int linum, const char *func);
 void print_matrix(Matrix m, char *fname, int linum, const char *func);
+void print_bin(size_t n, char *fname, int linum, const char *func);
 
 /* clear screen */
 void cls(char *fname, int linum, const char *func);
@@ -45,6 +46,7 @@ void cls(char *fname, int linum, const char *func);
 #define PRINT_MODE(c) print_mode(c, __FILE__, __LINE__, __func__)
 #define PRINT_EVENT(c) print_event(c, __FILE__, __LINE__, __func__)
 #define PRINT_MATRIX(m) print_matrix(m, __FILE__, __LINE__, __func__)
+#define PRINT_BIN(n) print_bin(n, __FILE__, __LINE__, __func__)
 
 #define CLS() cls(__FILE__, __LINE__, __func__)
 

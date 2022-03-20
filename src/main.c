@@ -2,6 +2,17 @@
 #include "controller.h"
 #include "view.h"
 
+static void key_released_handler( GtkEventControllerKey* self,
+				  guint keyval,
+				  guint keycode,
+				  GdkModifierType state,
+				  gpointer ctl_data)
+{
+  printf("keyval:  %d\n", keyval);
+  printf("keycode: %d\n", keycode);
+  printf("------------------\n");
+}
+
 static void motion_handler(UNUSED GtkEventControllerMotion	*self,
 			          gdouble			 x,
 			          gdouble			 y,
@@ -69,6 +80,7 @@ static void activate(GtkApplication *app, gpointer ctl_data)
   GtkWidget *drawing_area;
   GtkGesture *click;
   GtkEventController *motion;
+  GtkEventController *keypress;
   
   Ctl *ctl = (Ctl*)ctl_data;
   
@@ -112,6 +124,15 @@ static void activate(GtkApplication *app, gpointer ctl_data)
   g_signal_connect(motion,
 		   "motion",
 		   G_CALLBACK(motion_handler),
+		   ctl_data);
+
+  /* keypress */
+  keypress = gtk_event_controller_key_new();
+  gtk_widget_add_controller(window,
+			    GTK_EVENT_CONTROLLER(keypress));
+  g_signal_connect(keypress,
+		   "key-released",
+		   G_CALLBACK(key_released_handler),
 		   ctl_data);
   
   gtk_widget_show(window);

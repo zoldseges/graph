@@ -30,6 +30,7 @@ build/%.d: src/%.c
 release:
 	$(CC) $(wildcard src/*.c) -o graph $(CFLAGS) $(LIBS) $(RELEASE_FLAGS) 
 
+test : set_debug_gtk_lib
 test: $(wildcard test/src/*)
 	$(CC) test/src/main.c -o test/$@ $(D_CFLAGS) $(D_LIBS) $(DEBUG_FLAGS) 
 

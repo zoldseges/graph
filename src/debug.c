@@ -267,6 +267,28 @@ void print_matrix(Matrix m, char *fname, int linum, const char *func)
   printf("\n");
 }
 
+void print_bin(size_t n, char *fname, int linum, const char *func)
+{
+  printf("%s:", fname);
+  printf("%d:", linum);
+  printf("%d: ", 0);
+  printf("`%s`:\n", func);
+  printf("print_bin called\n");
+  size_t arr_size = sizeof(size_t) * 8;
+  int bin[arr_size];
+  for(size_t i = 0; i < (arr_size); i++) {
+    size_t val = ((size_t)1 << i) & n ? 1 : 0;
+    bin[(arr_size - 1) -i] = val;
+  }
+  
+  printf("0b");
+  for(size_t i = 0; i < (arr_size); i++) {
+    if(i % 8 == 0) printf(" ");
+    printf("%d", bin[i]);
+  }
+  printf("\n");
+}
+
 void cls(char *fname, int linum, const char *func)
 {
   printf("\033[2J\033[H");
@@ -277,3 +299,4 @@ void cls(char *fname, int linum, const char *func)
   printf("clear screen called\n");
   printf("-----------------------------\n");
 }
+

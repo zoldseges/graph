@@ -4,7 +4,11 @@
 
 int main(void)
 {
-  test_rdist();
-  test_grow_matrix();
+
+  PRINT_BIN(6);
+  PRINT_BIN(-6);
+  
+  PRINT_BIN(12);
+  PRINT_BIN(-12);
   return 0;
 }

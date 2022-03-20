@@ -222,6 +222,8 @@ void ctl_handler(Ctl *ctl)
   /* PRINT_MODE(ctl); */
   /* PRINT_EVENT(ctl); */
   /* PRINT_MATRIX(ctl->graph->sm); */
+  PRINT_BIN(ctl->pos.x);
+  PRINT_BIN((int)ctl->pos.x);
   enum ACTION action = ACT_ABORT;
 
   set_hovered(ctl, ctl->pos);
