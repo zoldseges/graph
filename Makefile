@@ -14,7 +14,7 @@ DEBUG_LIB := /opt/gtk
 
 INCLUDE_PREQS := $(patsubst src/%.c, build/%.d, $(wildcard src/*.c))
 
-all: set_debug_gtk_lib debug
+all: set_debug_gtk_lib debug $(INCLUDE_PREQS)
 
 debug: $(OBJS)
 	@echo $(OBJS)
